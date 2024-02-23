@@ -26,3 +26,11 @@ ProductClient >> post: aProductCollection [
 	requestHelpers add: (BodyHelper for: self).
 	^ self post
 ]
+
+{ #category : #public }
+ProductClient >> put: aProductCollection [
+
+	items := aProductCollection.
+	requestHelpers add: (BodyHelper for: self).
+	^ self put
+]
