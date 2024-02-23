@@ -46,7 +46,7 @@ ApiClient >> delete [
 
 { #category : #'actions api' }
 ApiClient >> get [
-
+	requestHelpers add: (JSONHelper for: self).
 	self applyRequestHelpers.
 	result := connection link get.
 	self applyResponseHelpers.
@@ -62,8 +62,7 @@ ApiClient >> initialize [
 	requestHelpers := OrderedCollection new.
 	requestHelpers
 		addFirst: (UrlHelper for: self);
-		add: (AuthenticationHelper for: self);
-		add: (JSONHelper for: self)
+		add: (AuthenticationHelper for: self)
 ]
 
 { #category : #accessing }
@@ -79,10 +78,10 @@ ApiClient >> patch [
 { #category : #'actions api' }
 ApiClient >> post [
 
+	requestHelpers addFirst: (JSONHelper for: self).
 	self applyRequestHelpers.
 	result := connection link post.
 	^ result
-	
 ]
 
 { #category : #'actions api' }

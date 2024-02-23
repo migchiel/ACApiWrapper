@@ -14,8 +14,8 @@ ProductClient >> apiPath [
 ProductClient >> delete: aProductCollection [
 
 	items := aProductCollection.
-	requestHelpers add: (AddSegmentHelper for: self);
-		add: (NoResponseHelper for: self).
+	requestHelpers
+		add: (AddSegmentHelper for: self).
 	^ self delete
 ]
 
