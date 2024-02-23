@@ -7,7 +7,7 @@ Class {
 		'connection',
 		'token',
 		'result',
-		'items'
+		'payload'
 	],
 	#category : #'ACApiWrapper-Core'
 }
@@ -53,6 +53,7 @@ ApiClient >> get [
 		add: (GetHelper for: self).
 	self applyRequestHelpers.
 	result := connection executeRequest.
+	responseHelpers add: (DtoFromResponseHelper for: self).
 	self applyResponseHelpers.
 	^ result
 ]
@@ -69,12 +70,6 @@ ApiClient >> initialize [
 		add: (AuthenticationHelper for: self)
 ]
 
-{ #category : #accessing }
-ApiClient >> items [
-
-	^ items
-]
-
 { #category : #'actions api' }
 ApiClient >> patch [
 
@@ -87,15 +82,27 @@ requestHelpers
 	
 ]
 
+{ #category : #accessing }
+ApiClient >> payload [
+
+	^ payload
+]
+
+{ #category : #accessing }
+ApiClient >> payload: aPayload [
+
+	payload := aPayload 
+]
+
 { #category : #'actions api' }
 ApiClient >> post [
 
-	requestHelpers 
-	addFirst: (JSONHelper for: self);
-	add: (PostHelper for: self).
-	self applyRequestHelpers.
-	result := connection executeRequest.
-	^ result
+	requestHelpers
+			          addFirst: (JSONHelper for: self);
+			          add: (PostHelper for: self).
+		          self applyRequestHelpers.
+		          ^ connection executeRequest .
+
 ]
 
 { #category : #'actions api' }
@@ -107,6 +114,18 @@ ApiClient >> put [
 	self applyRequestHelpers.
 	result := connection executeRequest.
 	^ result
+]
+
+{ #category : #accessing }
+ApiClient >> result [
+
+	^ result
+]
+
+{ #category : #accessing }
+ApiClient >> result: anObject [
+
+	result := anObject
 ]
 
 { #category : #accessing }
