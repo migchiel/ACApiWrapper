@@ -13,6 +13,12 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+ApiClient class >> dtoClass [ 
+
+	^ self subclassResponsibility 
+]
+
+{ #category : #'as yet unclassified' }
 ApiClient >> apiPath [ 
 
 	^ 'https://app.armorcode.com'

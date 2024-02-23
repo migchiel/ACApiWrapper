@@ -1,17 +1,23 @@
 Class {
-	#name : #FindingsClient,
+	#name : #FindingClient,
 	#superclass : #ApiClient,
 	#category : #'ACApiWrapper-Core'
 }
 
 { #category : #'as yet unclassified' }
-FindingsClient >> apiPath [ 
+FindingClient class >> dtoClass [
+
+	^ ACFindingDto
+]
+
+{ #category : #'as yet unclassified' }
+FindingClient >> apiPath [ 
 
 	^ '/user/findings/'
 ]
 
 { #category : #public }
-FindingsClient >> post: aCollection [
+FindingClient >> post: aCollection [
 
 	payload := aCollection.
 	requestHelpers add: (BodyHelper for: self).
