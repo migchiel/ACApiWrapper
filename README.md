@@ -7,6 +7,6 @@ You can load this project into Pharo using Metacello. Just open a playground and
 ```Smalltalk
 Metacello new
   repository: 'github://migchiel/apiExperiments:master/releases/latest';
-  baseline: 'apiExperiments';
+  baseline: 'ACApiWrapper';
   load.
 ```
