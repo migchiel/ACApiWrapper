@@ -1,7 +1,7 @@
 Class {
 	#name : #AuthenticationHelper,
 	#superclass : #ApiHelper,
-	#category : #ACApiWrapper
+	#category : #'ACApiWrapper-Helpers'
 }
 
 { #category : #'target resize' }

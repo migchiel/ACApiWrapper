@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'apiCall'
 	],
-	#category : #ACApiWrapper
+	#category : #'ACApiWrapper-Helpers'
 }
 
 { #category : #'as yet unclassified' }

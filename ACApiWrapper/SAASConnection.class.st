@@ -5,7 +5,7 @@ Class {
 		'apiClient',
 		'link'
 	],
-	#category : #ACApiWrapper
+	#category : #'ACApiWrapper-Core'
 }
 
 { #category : #'instance creation' }

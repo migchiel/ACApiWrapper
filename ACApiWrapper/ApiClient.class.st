@@ -9,7 +9,7 @@ Class {
 		'result',
 		'items'
 	],
-	#category : #ACApiWrapper
+	#category : #'ACApiWrapper-Core'
 }
 
 { #category : #'as yet unclassified' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #NoResponseHelper,
 	#superclass : #ResponseHelper,
-	#category : #ACApiWrapper
+	#category : #'ACApiWrapper-Helpers'
 }
 
 { #category : #'target resize' }

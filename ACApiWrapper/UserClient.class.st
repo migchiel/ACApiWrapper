@@ -1,7 +1,7 @@
 Class {
 	#name : #UserClient,
 	#superclass : #ApiClient,
-	#category : #ACApiWrapper
+	#category : #'ACApiWrapper-Helpers'
 }
 
 { #category : #'as yet unclassified' }

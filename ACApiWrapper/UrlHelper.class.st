@@ -1,7 +1,7 @@
 Class {
 	#name : #UrlHelper,
 	#superclass : #RequestHelper,
-	#category : #ACApiWrapper
+	#category : #'ACApiWrapper-Helpers'
 }
 
 { #category : #private }

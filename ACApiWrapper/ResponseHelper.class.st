@@ -1,5 +1,5 @@
 Class {
 	#name : #ResponseHelper,
 	#superclass : #ApiHelper,
-	#category : #ACApiWrapper
+	#category : #'ACApiWrapper-Helpers'
 }

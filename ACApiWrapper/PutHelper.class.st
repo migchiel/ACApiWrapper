@@ -1,7 +1,7 @@
 Class {
 	#name : #PutHelper,
 	#superclass : #RequestHelper,
-	#category : #ACApiWrapper
+	#category : #'ACApiWrapper-Helpers'
 }
 
 { #category : #'target resize' }
