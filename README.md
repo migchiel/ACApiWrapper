@@ -6,7 +6,7 @@ You can load illumioWorkbench into Pharo using Metacello. Just open a playground
 
 ```Smalltalk
 Metacello new
-  repository: 'github://migchiel/apiExperiments:main/releases/latest';
+  repository: 'github://migchiel/apiExperiments:master/releases/latest';
   baseline: 'apiExperiments';
   load.
 ```
