@@ -24,8 +24,6 @@ ApiHelper >> apiCall: anApiCall [
 
 { #category : #'target resize' }
 ApiHelper >> apply [
-	
-	^ self subclassResponsibility 
 
-	
+	^ self crTrace: 'Helper: ' , self className
 ]

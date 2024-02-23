@@ -7,5 +7,6 @@ Class {
 { #category : #'target resize' }
 JSONHelper >> apply [
 
-	apiCall connection forJsonREST 
+	super apply.
+	apiCall connection link forJsonREST
 ]

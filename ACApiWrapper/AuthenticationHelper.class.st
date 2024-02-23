@@ -7,5 +7,6 @@ Class {
 { #category : #'target resize' }
 AuthenticationHelper >> apply [
 
-	apiCall connection setBearerAuthentication: apiCall token
+	super apply.
+	apiCall connection link setBearerAuthentication: apiCall token
 ]

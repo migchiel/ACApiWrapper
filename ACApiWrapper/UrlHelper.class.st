@@ -8,5 +8,5 @@ Class {
 UrlHelper >> apply [
 
 	super apply.
-	apiCall connection url: apiCall apiPath
+	apiCall connection link url: apiCall apiPath
 ]

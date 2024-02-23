@@ -3,8 +3,3 @@ Class {
 	#superclass : #ApiHelper,
 	#category : #ACApiWrapper
 }
-
-{ #category : #'target resize' }
-ResponseHelper >> apply [
-
-]

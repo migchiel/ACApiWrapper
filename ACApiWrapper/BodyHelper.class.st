@@ -7,5 +7,6 @@ Class {
 { #category : #'target resize' }
 BodyHelper >> apply [
 
-	super apply
+	super apply.
+	apiCall connection link contents: apiCall items
 ]
