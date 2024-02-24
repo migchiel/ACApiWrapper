@@ -1,6 +1,6 @@
 Class {
 	#name : #UrlHelper,
-	#superclass : #RequestHelper,
+	#superclass : #ApiHelper,
 	#category : #'ACApiWrapper-Helpers'
 }
 
@@ -8,5 +8,6 @@ Class {
 UrlHelper >> apply [
 
 	super apply.
+	self trace: self className.
 	apiCall connection link url: apiCall apiPath
 ]

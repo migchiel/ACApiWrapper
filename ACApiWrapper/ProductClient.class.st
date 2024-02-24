@@ -17,21 +17,30 @@ ProductClient >> apiPath [
 ]
 
 { #category : #public }
-ProductClient >> create: aProductCollection [
+ProductClient >> create: aProductOrCollection [
 
-	^ aProductCollection collect: [ :item |
-		  payload := item.
-		  requestHelpers add: (BodyHelper for: self).
+	requestHelpers add: (BodyHelper for: self).
+	^ (self ensureCollection: aProductOrCollection) collect: [ :item |
+		  payload := item properties.
 		  self post ]
 ]
 
 { #category : #public }
-ProductClient >> delete: aProductCollection [
+ProductClient >> delete: aProductOrCollection [
 
-	^ aProductCollection collect: [ :item |
+	requestHelpers add: (AddSegmentHelper for: self).
+	^ (self ensureCollection: aProductOrCollection) collect: [ :item |
 		  payload := item.
-		  requestHelpers add: (AddSegmentHelper for: self).
 		  self delete ]
+]
+
+{ #category : #'as yet unclassified' }
+ProductClient >> ensureCollection: aProductOrCollection [
+
+	^ aProductOrCollection isCollection
+		ifTrue: [ aProductOrCollection ]
+		ifFalse: [ Array with: aProductOrCollection ].
+
 ]
 
 { #category : #public }

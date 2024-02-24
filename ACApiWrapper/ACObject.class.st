@@ -22,58 +22,26 @@ ACObject >> createdAt [
 	^ self convertToTimeString: properties createdAt
 ]
 
-{ #category : #accessing }
-ACObject >> createdBy [
+{ #category : #'reflective operations' }
+ACObject >> doesNotUnderstand: message [
+	"Overwritten so that 'self foo' becomes 'self at: #foo'
+	and 'self foo: 1' becomes 'self at: #foo put: 1' except that self is returned"
 
-	^ properties createdBy
+	| key |
+	key := message selector.
+	key isUnary ifTrue: [ ^ self properties at: key ].
+	^ (key isKeyword and: [ key numArgs = 1 ])
+		  ifTrue: [
+			  self properties
+				  at: key allButLast asSymbol put: message arguments first;
+				  yourself ]
+		  ifFalse: [ super doesNotUnderstand: message ]
 ]
 
-{ #category : #accessing }
-ACObject >> deleted [
+{ #category : #initialization }
+ACObject >> initialize [ 
 
-	^ properties deleted
-]
-
-{ #category : #accessing }
-ACObject >> deleted: aBoolean [
-
-	^ properties deleted: aBoolean
-]
-
-{ #category : #accessing }
-ACObject >> description [
-
-	^ properties description
-]
-
-{ #category : #accessing }
-ACObject >> description: aDescription [
-
-	^ properties description: aDescription 
-]
-
-{ #category : #accessing }
-ACObject >> id [
-
-	^ properties id
-]
-
-{ #category : #accessing }
-ACObject >> id: anId [
-
-	^ properties id: anId
-]
-
-{ #category : #accessing }
-ACObject >> name [ 
-
-	^ properties name
-]
-
-{ #category : #accessing }
-ACObject >> name: aName [
-
-	^ properties name: aName
+	properties := NeoJSONObject new.
 ]
 
 { #category : #accessing }

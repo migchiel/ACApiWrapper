@@ -8,5 +8,5 @@ Class {
 AddSegmentHelper >> apply [
 
 	super apply.
-	apiCall connection link addPathSegment: apiCall items asString
+	apiCall connection link addPathSegment: apiCall payload asString
 ]

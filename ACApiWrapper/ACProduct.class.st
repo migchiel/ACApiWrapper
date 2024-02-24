@@ -5,13 +5,7 @@ Class {
 }
 
 { #category : #accessing }
-ACProduct >> type [ 
-
-	^ properties type
-]
-
-{ #category : #accessing }
 ACProduct >> type: aType [
 
-	^ properties type: aType
+	^ properties type: aType properties
 ]

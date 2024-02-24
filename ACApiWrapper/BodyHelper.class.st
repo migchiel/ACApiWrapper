@@ -8,5 +8,5 @@ Class {
 BodyHelper >> apply [
 
 	super apply.
-	apiCall connection link contents: apiCall items
+	apiCall connection link contents: apiCall payload 
 ]
