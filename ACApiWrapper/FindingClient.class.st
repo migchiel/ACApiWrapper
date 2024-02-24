@@ -7,7 +7,7 @@ Class {
 { #category : #'as yet unclassified' }
 FindingClient class >> dtoClass [
 
-	^ ACFindingDto
+	^ ACFinding
 ]
 
 { #category : #'as yet unclassified' }
@@ -22,4 +22,10 @@ FindingClient >> post: aCollection [
 	payload := aCollection.
 	requestHelpers add: (BodyHelper for: self).
 	^ self post
+]
+
+{ #category : #'actions api' }
+FindingClient >> read [
+
+	
 ]

@@ -51,19 +51,6 @@ ApiClient >> delete [
 	^ result
 ]
 
-{ #category : #'actions api' }
-ApiClient >> get [
-
-	requestHelpers
-		add: (JSONHelper for: self);
-		add: (GetHelper for: self).
-	self applyRequestHelpers.
-	result := connection executeRequest.
-	responseHelpers add: (DtoFromResponseHelper for: self).
-	self applyResponseHelpers.
-	^ result
-]
-
 { #category : #initialization }
 ApiClient >> initialize [
 
@@ -119,6 +106,19 @@ ApiClient >> put [
 		add: (PutHelper for: self).
 	self applyRequestHelpers.
 	result := connection executeRequest.
+	^ result
+]
+
+{ #category : #'actions api' }
+ApiClient >> read [
+
+	requestHelpers
+		add: (JSONHelper for: self);
+		add: (GetHelper for: self).
+	self applyRequestHelpers.
+	result := connection executeRequest.
+	responseHelpers add: (DtoFromResponseHelper for: self).
+	self applyResponseHelpers.
 	^ result
 ]
 

@@ -1,5 +1,5 @@
 Class {
-	#name : #ACFindingDto,
+	#name : #ACFinding,
 	#superclass : #ACObject,
 	#category : #'ACApiWrapper-Dto'
 }
