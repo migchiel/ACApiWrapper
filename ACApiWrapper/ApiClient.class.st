@@ -36,6 +36,18 @@ ApiClient >> applyResponseHelpers [
 	responseHelpers do: #apply
 ]
 
+{ #category : #'as yet unclassified' }
+ApiClient >> applyToRequest: aHelperCollection [
+
+	requestHelpers addAll: (self instantiateHelpers: aHelperCollection)
+]
+
+{ #category : #'as yet unclassified' }
+ApiClient >> applyToResponse: aHelperCollection [
+
+	responseHelpers addAll: (self instantiateHelpers: aHelperCollection)
+]
+
 { #category : #accessing }
 ApiClient >> connection [
 
@@ -45,9 +57,21 @@ ApiClient >> connection [
 { #category : #'actions api' }
 ApiClient >> delete [
 
-	requestHelpers add: (DeleteHelper for: self).
 	self applyRequestHelpers.
 	result := connection executeRequest.
+	^ result
+]
+
+{ #category : #'actions api' }
+ApiClient >> get [ 
+
+self applyToRequest: {
+			JSONHelper.
+			GetHelper }.
+	self applyToResponse: { DtoFromResponseHelper }.
+	self applyRequestHelpers.
+	result := connection executeRequest.
+	self applyResponseHelpers.
 	^ result
 ]
 
@@ -59,20 +83,26 @@ ApiClient >> initialize [
 	responseHelpers := OrderedCollection new.
 	requestHelpers := OrderedCollection new.
 	requestHelpers
-		addFirst: (UrlHelper for: self);
-		add: (AuthenticationHelper for: self)
+		addFirst: (UrlHelper applyTo: self);
+		add: (AuthenticationHelper applyTo: self)
+]
+
+{ #category : #'as yet unclassified' }
+ApiClient >> instantiateHelpers: aHelperCollection [
+
+	^ aHelperCollection collect: [ :helper |
+		                  helper applyTo: self ]
 ]
 
 { #category : #'actions api' }
 ApiClient >> patch [
 
-requestHelpers
-		addFirst: (JSONHelper for: self);
-		add: (PatchHelper for: self).
+	requestHelpers
+		addFirst: (JSONHelper applyTo: self);
+		add: (PatchHelper applyTo: self).
 	self applyRequestHelpers.
 	result := connection executeRequest.
 	^ result
-	
 ]
 
 { #category : #accessing }
@@ -90,20 +120,17 @@ ApiClient >> payload: aPayload [
 { #category : #'actions api' }
 ApiClient >> post [
 
-	requestHelpers
-			          addFirst: (JSONHelper for: self);
-			          add: (PostHelper for: self).
-		          self applyRequestHelpers.
-		          ^ connection executeRequest .
 
+	self applyRequestHelpers.
+	^ connection executeRequest
 ]
 
 { #category : #'actions api' }
 ApiClient >> put [
 
 	requestHelpers
-		addFirst: (JSONHelper for: self);
-		add: (PutHelper for: self).
+		addFirst: (JSONHelper applyTo: self);
+		add: (PutHelper applyTo: self).
 	self applyRequestHelpers.
 	result := connection executeRequest.
 	^ result
@@ -112,14 +139,7 @@ ApiClient >> put [
 { #category : #'actions api' }
 ApiClient >> read [
 
-	requestHelpers
-		add: (JSONHelper for: self);
-		add: (GetHelper for: self).
-	self applyRequestHelpers.
-	result := connection executeRequest.
-	responseHelpers add: (DtoFromResponseHelper for: self).
-	self applyResponseHelpers.
-	^ result
+	^ self get
 ]
 
 { #category : #accessing }

@@ -20,7 +20,7 @@ FindingClient >> apiPath [
 FindingClient >> post: aCollection [
 
 	payload := aCollection.
-	requestHelpers add: (BodyHelper for: self).
+	requestHelpers add: (BodyHelper applyTo: self).
 	^ self post
 ]
 

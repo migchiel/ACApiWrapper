@@ -19,7 +19,7 @@ ProductClient >> apiPath [
 { #category : #public }
 ProductClient >> create: aProductOrCollection [
 
-	requestHelpers add: (BodyHelper for: self).
+	self applyToRequest: { JSONHelper . PostHelper . BodyHelper }.
 	^ (self ensureCollection: aProductOrCollection) collect: [ :item |
 		  payload := item properties.
 		  self post ]
@@ -28,7 +28,8 @@ ProductClient >> create: aProductOrCollection [
 { #category : #public }
 ProductClient >> delete: aProductOrCollection [
 
-	requestHelpers add: (AddSegmentHelper for: self).
+
+	self applyToRequest: { AddSegmentHelper . DeleteHelper }.
 	^ (self ensureCollection: aProductOrCollection) collect: [ :item |
 		  payload := item.
 		  self delete ]
@@ -44,9 +45,11 @@ ProductClient >> ensureCollection: aProductOrCollection [
 ]
 
 { #category : #public }
-ProductClient >> update: aProductCollection [
+ProductClient >> update: aProductOrCollection [
 
-	payload := aProductCollection.
-	requestHelpers add: (BodyHelper for: self).
-	^ self put
+	
+	self applyToRequest: { JSONHelper . PutHelper . BodyHelper  }.
+	^ (self ensureCollection: aProductOrCollection) collect: [ :item |
+		  payload := item properties.
+		  self put ]
 ]

@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ApiHelper class >> for: anApiCall [
+ApiHelper class >> applyTo: anApiCall [
+
 	| instance |
-	
 	instance := self new.
 	instance apiCall: anApiCall.
 	^ instance

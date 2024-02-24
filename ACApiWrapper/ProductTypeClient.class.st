@@ -19,9 +19,12 @@ ProductTypeClient >> apiPath [
 { #category : #public }
 ProductTypeClient >> create: aProductTypeCollection [
 
+	requestHelpers
+		addFirst: (JSONHelper applyTo: self);
+		add: (PostHelper applyTo: self);
+		add: (BodyHelper applyTo: self).
 	^ aProductTypeCollection collect: [ :item |
 		  payload := item.
-		  requestHelpers add: (BodyHelper for: self).
 		  self post ]
 ]
 
@@ -29,6 +32,6 @@ ProductTypeClient >> create: aProductTypeCollection [
 ProductTypeClient >> update: aProductTypeCollection [
 
 	payload := aProductTypeCollection.
-	requestHelpers add: (BodyHelper for: self).
+	requestHelpers add: (BodyHelper applyTo: self).
 	^ self put
 ]
