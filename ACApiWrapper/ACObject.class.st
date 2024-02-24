@@ -38,22 +38,16 @@ ACObject >> doesNotUnderstand: message [
 		  ifFalse: [ super doesNotUnderstand: message ]
 ]
 
-{ #category : #initialization }
-ACObject >> initialize [ 
-
-	properties := NeoJSONObject new.
-]
-
 { #category : #accessing }
 ACObject >> properties [
 
-	^ properties
+	^ properties ifNil: [ properties := NeoJSONObject new ]
 ]
 
 { #category : #accessing }
-ACObject >> properties: anObject [
+ACObject >> properties: aNeoJsonObject [
 
-	properties := anObject
+	properties := aNeoJsonObject 
 ]
 
 { #category : #accessing }
