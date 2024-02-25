@@ -10,10 +10,8 @@ Class {
 { #category : #'as yet unclassified' }
 ApiHelper class >> applyTo: anApiCall [
 
-	| instance |
-	instance := self new.
-	instance apiCall: anApiCall.
-	^ instance
+	^ self new apiCall: anApiCall;yourself
+
 ]
 
 { #category : #accessing }

@@ -19,7 +19,7 @@ ProductTypeClient >> apiPath [
 { #category : #public }
 ProductTypeClient >> create: aProductTypeCollection [
 
-	self applyToRequest: {
+	connectionHelper  applyToRequest: {
 			JSONHelper.
 			PostHelper.
 			BodyHelper }.
@@ -32,6 +32,6 @@ ProductTypeClient >> create: aProductTypeCollection [
 ProductTypeClient >> update: aProductTypeCollection [
 
 	payload := aProductTypeCollection.
-	self applyToRequest: { BodyHelper }.
+	connectionHelper  applyToRequest: { BodyHelper }.
 	^ self put
 ]

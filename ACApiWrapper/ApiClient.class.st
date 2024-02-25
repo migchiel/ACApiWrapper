@@ -2,8 +2,6 @@ Class {
 	#name : #ApiClient,
 	#superclass : #Object,
 	#instVars : [
-		'requestHelpers',
-		'responseHelpers',
 		'connection',
 		'token',
 		'result',
@@ -25,30 +23,6 @@ ApiClient >> apiPath [
 	^ 'https://app.armorcode.com'
 ]
 
-{ #category : #'as yet unclassified' }
-ApiClient >> applyRequestHelpers [
-
-	requestHelpers do: #apply
-]
-
-{ #category : #'as yet unclassified' }
-ApiClient >> applyResponseHelpers [
-
-	responseHelpers do: #apply
-]
-
-{ #category : #'as yet unclassified' }
-ApiClient >> applyToRequest: aHelperCollection [
-
-	requestHelpers addAll: (self instantiateHelpers: aHelperCollection)
-]
-
-{ #category : #'as yet unclassified' }
-ApiClient >> applyToResponse: aHelperCollection [
-
-	responseHelpers addAll: (self instantiateHelpers: aHelperCollection)
-]
-
 { #category : #accessing }
 ApiClient >> connection [
 
@@ -58,7 +32,7 @@ ApiClient >> connection [
 { #category : #'actions api' }
 ApiClient >> delete [
 
-	self applyRequestHelpers.
+	connectionHelper  applyRequestHelpers.
 	result := connection executeRequest.
 	^ result
 ]
@@ -73,15 +47,16 @@ ApiClient >> ensureCollection: aProductOrCollection [
 ]
 
 { #category : #'actions api' }
-ApiClient >> get [ 
+ApiClient >> get [
 
-self applyToRequest: {
-			JSONHelper.
-			GetHelper }.
-	self applyToResponse: { DtoFromResponseHelper }.
-	self applyRequestHelpers.
+	connectionHelper
+		applyToRequest: {
+				JSONHelper.
+				GetHelper };
+		applyToResponse: { DtoFromResponseHelper };
+		applyRequestHelpers.
 	result := connection executeRequest.
-	self applyResponseHelpers.
+	connectionHelper  applyResponseHelpers.
 	^ result
 ]
 
@@ -90,26 +65,19 @@ ApiClient >> initialize [
 
 	token := Smalltalk os environment at: 'acapi_token'.
 	connection := SAASConnection for: self.
-	connectionHelper := ConnectionHelper new.
-	responseHelpers := OrderedCollection new.
-	requestHelpers := OrderedCollection new.
-	self applyToRequest: { UrlHelper . AuthenticationHelper  }
-]
-
-{ #category : #'as yet unclassified' }
-ApiClient >> instantiateHelpers: aHelperCollection [
-
-	^ aHelperCollection collect: [ :helper |
-		                  helper applyTo: self ]
+	connectionHelper := ConnectionHelper for: self.
+	connectionHelper applyToRequest: {
+			UrlHelper.
+			AuthenticationHelper }
 ]
 
 { #category : #'actions api' }
 ApiClient >> patch [
 
-	requestHelpers
-		addFirst: (JSONHelper applyTo: self);
-		add: (PatchHelper applyTo: self).
-	self applyRequestHelpers.
+	connectionHelper applyToRequest: {
+			JSONHelper.
+			PatchHelper };
+	 applyRequestHelpers.
 	result := connection executeRequest.
 	^ result
 ]
@@ -129,18 +97,17 @@ ApiClient >> payload: aPayload [
 { #category : #'actions api' }
 ApiClient >> post [
 
-
-	self applyRequestHelpers.
+	connectionHelper  applyRequestHelpers.
 	^ connection executeRequest
 ]
 
 { #category : #'actions api' }
 ApiClient >> put [
 
-	requestHelpers
-		addFirst: (JSONHelper applyTo: self);
-		add: (PutHelper applyTo: self).
-	self applyRequestHelpers.
+	connectionHelper applyToRequest: {
+			JSONHelper.
+			PutHelper };
+	 applyRequestHelpers.
 	result := connection executeRequest.
 	^ result
 ]
