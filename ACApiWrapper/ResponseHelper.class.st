@@ -14,5 +14,5 @@ ResponseHelper class >> isAbstract [
 ResponseHelper >> apply [
 
 	super apply.
-	self trace: '-- RESPONSE --', self className
+	self trace: '--> RESPONSE --> ' , self className
 ]

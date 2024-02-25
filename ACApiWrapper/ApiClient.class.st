@@ -11,7 +11,7 @@ Class {
 	#category : #'ACApiWrapper-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #url }
 ApiClient >> clientPathSegments [
 
 	^ self subclassResponsibility 
@@ -28,15 +28,10 @@ ApiClient >> create: anItemOrCollection [
 
 	self createRequestHelpers.
 	self createResponseHelpers.
-	result := (self ensureCollection: anItemOrCollection) collect: [
-		          :item |
-		          payload := item properties.
-		          self post ].
-	connectionHelper applyResponseHelpers.
-	^ result
+	^ self performCreateOrUpdate: anItemOrCollection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'helper methods' }
 ApiClient >> createRequestHelpers [
 
 connectionHelper
@@ -48,7 +43,7 @@ connectionHelper
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'helper methods' }
 ApiClient >> createResponseHelpers [
 
 	connectionHelper
@@ -76,7 +71,7 @@ ApiClient >> delete: anItemOrCollection [
 	^ result
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'helper methods' }
 ApiClient >> deleteRequestHelpers [
 
 connectionHelper applyToRequest: {
@@ -84,19 +79,18 @@ connectionHelper applyToRequest: {
 			DeleteHelper }.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'helper methods' }
 ApiClient >> deleteResponseHelpers [
 
-	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #types }
 ApiClient >> dtoClass [ 
 
 	^ self subclassResponsibility 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'helper methods' }
 ApiClient >> ensureCollection: aProductOrCollection [
 
 	^ aProductOrCollection isCollection
@@ -105,13 +99,13 @@ ApiClient >> ensureCollection: aProductOrCollection [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #url }
 ApiClient >> fullPath [
 
 	^ self saasBasePath , self clientPathSegments
 ]
 
-{ #category : #'actions api' }
+{ #category : #public }
 ApiClient >> get [
 
 	connectionHelper applyRequestHelpers.
@@ -120,7 +114,7 @@ ApiClient >> get [
 	^ result
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'helper methods' }
 ApiClient >> getRequestHelpers [
 
 	connectionHelper applyToRequest: {
@@ -128,7 +122,7 @@ ApiClient >> getRequestHelpers [
 			GetHelper }
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'helper methods' }
 ApiClient >> getResponseHelpers [
 
 	connectionHelper applyToResponse: { DtoFromResponseHelper }
@@ -145,17 +139,6 @@ ApiClient >> initialize [
 			AuthenticationHelper }
 ]
 
-{ #category : #'actions api' }
-ApiClient >> patch [
-
-	connectionHelper applyToRequest: {
-			JSONHelper.
-			PatchHelper };
-	 applyRequestHelpers.
-	result := connection executeRequest.
-	^ result
-]
-
 { #category : #accessing }
 ApiClient >> payload [
 
@@ -168,22 +151,15 @@ ApiClient >> payload: aPayload [
 	payload := aPayload 
 ]
 
-{ #category : #'actions api' }
-ApiClient >> post [
+{ #category : #'as yet unclassified' }
+ApiClient >> performCreateOrUpdate: anItemOrCollection [
 
-	connectionHelper applyRequestHelpers.
-	^ connection executeRequest.
-
-]
-
-{ #category : #'actions api' }
-ApiClient >> put [
-
-	connectionHelper applyToRequest: {
-			JSONHelper.
-			PutHelper };
-	 applyRequestHelpers.
-	result := connection executeRequest.
+	result := (self ensureCollection: anItemOrCollection) collect: [
+		          :item |
+		          payload := item properties.
+								connectionHelper applyRequestHelpers.
+								connection executeRequest ].
+	connectionHelper applyResponseHelpers.
 	^ result
 ]
 
@@ -208,7 +184,7 @@ ApiClient >> result: anObject [
 	result := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #url }
 ApiClient >> saasBasePath [
 
 	^ 'https://app.armorcode.com'
@@ -225,15 +201,10 @@ ApiClient >> update: anItemOrCollection [
 
 	self updateRequestHelpers.
 	self updateResponseHelpers.
-	result := (self ensureCollection: anItemOrCollection) collect: [ :item |
-		  payload := item properties.
-		  self put ].
-	connectionHelper applyResponseHelpers.
-	^ result
-	
+	^ self performCreateOrUpdate: anItemOrCollection 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'helper methods' }
 ApiClient >> updateRequestHelpers [
 
 	connectionHelper applyToRequest: {
@@ -242,8 +213,7 @@ ApiClient >> updateRequestHelpers [
 			BodyHelper }.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'helper methods' }
 ApiClient >> updateResponseHelpers [
 
-	
 ]
