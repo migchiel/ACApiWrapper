@@ -1,12 +1,11 @@
 Class {
 	#name : #PutHelper,
-	#superclass : #RequestHelper,
+	#superclass : #ApiHelper,
 	#category : #'ACApiWrapper-Helpers'
 }
 
 { #category : #'target resize' }
 PutHelper >> apply [
 
-	super apply.
 	apiCall connection link method: #PUT
 ]

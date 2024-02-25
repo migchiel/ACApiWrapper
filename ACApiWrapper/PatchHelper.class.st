@@ -1,12 +1,11 @@
 Class {
 	#name : #PatchHelper,
-	#superclass : #RequestHelper,
+	#superclass : #ApiHelper,
 	#category : #'ACApiWrapper-Helpers'
 }
 
 { #category : #'target resize' }
 PatchHelper >> apply [
 
-	super apply.
 	apiCall connection link method: #PATCH
 ]

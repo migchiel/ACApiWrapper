@@ -1,12 +1,10 @@
 Class {
 	#name : #PaginatedResponseHelper,
-	#superclass : #ResponseHelper,
+	#superclass : #ApiHelper,
 	#category : #'ACApiWrapper-Helpers'
 }
 
 { #category : #'target resize' }
 PaginatedResponseHelper >> apply [
 
-	super apply.
-	
 ]

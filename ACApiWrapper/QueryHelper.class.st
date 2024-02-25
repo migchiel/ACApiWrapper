@@ -1,11 +1,10 @@
 Class {
 	#name : #QueryHelper,
-	#superclass : #RequestHelper,
+	#superclass : #ApiHelper,
 	#category : #'ACApiWrapper-Helpers'
 }
 
 { #category : #'target resize' }
 QueryHelper >> apply [
 
-	super apply
 ]

@@ -1,13 +1,13 @@
 Class {
 	#name : #NoResponseHelper,
-	#superclass : #ResponseHelper,
+	#superclass : #ApiHelper,
 	#category : #'ACApiWrapper-Helpers'
 }
 
 { #category : #'target resize' }
 NoResponseHelper >> apply [
 
-	super apply.
+
 	apiCall connection link
 		contentReader: nil;
 		contentWriter: nil;
