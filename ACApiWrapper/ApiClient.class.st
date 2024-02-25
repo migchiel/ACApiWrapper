@@ -7,7 +7,8 @@ Class {
 		'connection',
 		'token',
 		'result',
-		'payload'
+		'payload',
+		'connectionHelper'
 	],
 	#category : #'ACApiWrapper-Core'
 }
@@ -62,6 +63,15 @@ ApiClient >> delete [
 	^ result
 ]
 
+{ #category : #'as yet unclassified' }
+ApiClient >> ensureCollection: aProductOrCollection [
+
+	^ aProductOrCollection isCollection
+		ifTrue: [ aProductOrCollection ]
+		ifFalse: [ Array with: aProductOrCollection ].
+
+]
+
 { #category : #'actions api' }
 ApiClient >> get [ 
 
@@ -80,11 +90,10 @@ ApiClient >> initialize [
 
 	token := Smalltalk os environment at: 'acapi_token'.
 	connection := SAASConnection for: self.
+	connectionHelper := ConnectionHelper new.
 	responseHelpers := OrderedCollection new.
 	requestHelpers := OrderedCollection new.
-	requestHelpers
-		addFirst: (UrlHelper applyTo: self);
-		add: (AuthenticationHelper applyTo: self)
+	self applyToRequest: { UrlHelper . AuthenticationHelper  }
 ]
 
 { #category : #'as yet unclassified' }

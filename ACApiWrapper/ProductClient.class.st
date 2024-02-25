@@ -35,15 +35,6 @@ ProductClient >> delete: aProductOrCollection [
 		  self delete ]
 ]
 
-{ #category : #'as yet unclassified' }
-ProductClient >> ensureCollection: aProductOrCollection [
-
-	^ aProductOrCollection isCollection
-		ifTrue: [ aProductOrCollection ]
-		ifFalse: [ Array with: aProductOrCollection ].
-
-]
-
 { #category : #public }
 ProductClient >> update: aProductOrCollection [
 
