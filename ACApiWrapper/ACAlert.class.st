@@ -1,5 +1,5 @@
 Class {
-	#name : #ACUser,
+	#name : #ACAlert,
 	#superclass : #ACObject,
 	#category : #'ACApiWrapper-Dto'
 }
