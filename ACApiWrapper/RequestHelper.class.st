@@ -14,5 +14,5 @@ RequestHelper class >> isAbstract [
 RequestHelper >> apply [
 
 	super apply.
-	self trace: '--> REQUEST --> ' , self className
+	self trace: 'REQUEST --> ' , self className
 ]

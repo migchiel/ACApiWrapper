@@ -151,7 +151,7 @@ ApiClient >> payload: aPayload [
 	payload := aPayload 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'actions api' }
 ApiClient >> performCreateOrUpdate: anItemOrCollection [
 
 	result := (self ensureCollection: anItemOrCollection) collect: [
