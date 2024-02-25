@@ -5,13 +5,13 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-SubProductClient class >> dtoClass [
+SubProductClient >> clientPathSegments [ 
 
-	^ ACSubProduct
+	^ '/api/sub-product'
 ]
 
 { #category : #'as yet unclassified' }
-SubProductClient >> apiPath [
+SubProductClient >> dtoClass [
 
-	^ super apiPath, '/api/sub-product'
+	^ ACSubProduct
 ]

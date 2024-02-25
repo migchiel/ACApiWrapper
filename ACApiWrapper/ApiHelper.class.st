@@ -14,6 +14,12 @@ ApiHelper class >> applyTo: anApiCall [
 
 ]
 
+{ #category : #testing }
+ApiHelper class >> isAbstract [
+
+	^ self == ApiHelper
+]
+
 { #category : #accessing }
 ApiHelper >> apiCall: anApiCall [
 

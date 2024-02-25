@@ -4,6 +4,12 @@ Class {
 	#category : #'ACApiWrapper-Helpers'
 }
 
+{ #category : #testing }
+ResponseHelper class >> isAbstract [
+
+	^ self == ResponseHelper 
+]
+
 { #category : #'target resize' }
 ResponseHelper >> apply [
 

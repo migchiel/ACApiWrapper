@@ -5,15 +5,9 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ProductTypeClient class >> dtoClass [
+ProductTypeClient >> clientPathSegments [ 
 
-	^ ACProductType
-]
-
-{ #category : #'as yet unclassified' }
-ProductTypeClient >> apiPath [
-
-	^ super apiPath , '/user/product-type'
+	^  '/user/product-type'
 ]
 
 { #category : #public }
@@ -26,6 +20,12 @@ ProductTypeClient >> create: aProductTypeCollection [
 	^ aProductTypeCollection collect: [ :item |
 		  payload := item.
 		  self post ]
+]
+
+{ #category : #'as yet unclassified' }
+ProductTypeClient >> dtoClass [
+
+	^ ACProductType
 ]
 
 { #category : #updating }

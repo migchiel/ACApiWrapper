@@ -5,7 +5,13 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-UserClient >> apiPath [
+UserClient >> clientPathSegments [ 
 
-	^ super apiPath, '/user/data/users'
+	^  '/user/data/users'
+]
+
+{ #category : #'as yet unclassified' }
+UserClient >> dtoClass [
+
+	^ ACUser
 ]

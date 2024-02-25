@@ -8,7 +8,6 @@ Class {
 DtoFromResponseHelper >> apply [
 
 	super apply.
-	apiCall result: (apiCall result collect: [:item | (apiCall class dtoClass new
-			 properties: item;
-			 yourself)])
+	apiCall result: (apiCall result collect: [ :item |
+			 apiCall dtoClass new properties: item;yourself ])
 ]

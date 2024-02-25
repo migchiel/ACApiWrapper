@@ -5,27 +5,25 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ProductClient class >> dtoClass [
+ProductClient >> clientPathSegments [
 
-	^ ACProduct
-]
-
-{ #category : #'as yet unclassified' }
-ProductClient >> apiPath [
-
-	^ super apiPath, '/user/product'
+	^ '/user/product'
 ]
 
 { #category : #public }
 ProductClient >> create: aProductOrCollection [
 
-	connectionHelper  applyToRequest: {
-			JSONHelper.
-			PostHelper.
-			BodyHelper }.
-	^ (self ensureCollection: aProductOrCollection) collect: [ :item |
+	connectionHelper
+		applyToRequest: {
+				JSONHelper.
+				PostHelper.
+				BodyHelper };
+		applyToResponse: { DtoFromResponseHelper }.
+	result := (self ensureCollection: aProductOrCollection) collect: [ :item |
 		  payload := item properties.
-		  self post ]
+		  self post ].
+	connectionHelper applyResponseHelpers.
+	^ result
 ]
 
 { #category : #public }
@@ -37,6 +35,12 @@ ProductClient >> delete: aProductOrCollection [
 	^ (self ensureCollection: aProductOrCollection) collect: [ :item |
 		  payload := item.
 		  self delete ]
+]
+
+{ #category : #'as yet unclassified' }
+ProductClient >> dtoClass [
+
+	^ ACProduct
 ]
 
 { #category : #public }

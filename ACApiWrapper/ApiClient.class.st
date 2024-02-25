@@ -12,15 +12,9 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ApiClient class >> dtoClass [ 
+ApiClient >> clientPathSegments [
 
 	^ self subclassResponsibility 
-]
-
-{ #category : #'as yet unclassified' }
-ApiClient >> apiPath [ 
-
-	^ 'https://app.armorcode.com'
 ]
 
 { #category : #accessing }
@@ -38,12 +32,24 @@ ApiClient >> delete [
 ]
 
 { #category : #'as yet unclassified' }
+ApiClient >> dtoClass [ 
+
+	^ self subclassResponsibility 
+]
+
+{ #category : #'as yet unclassified' }
 ApiClient >> ensureCollection: aProductOrCollection [
 
 	^ aProductOrCollection isCollection
 		ifTrue: [ aProductOrCollection ]
 		ifFalse: [ Array with: aProductOrCollection ].
 
+]
+
+{ #category : #'as yet unclassified' }
+ApiClient >> fullPath [
+
+	^ self saasBasePath , self clientPathSegments
 ]
 
 { #category : #'actions api' }
@@ -97,8 +103,9 @@ ApiClient >> payload: aPayload [
 { #category : #'actions api' }
 ApiClient >> post [
 
-	connectionHelper  applyRequestHelpers.
-	^ connection executeRequest
+	connectionHelper applyRequestHelpers.
+	^ connection executeRequest.
+
 ]
 
 { #category : #'actions api' }
@@ -128,6 +135,12 @@ ApiClient >> result [
 ApiClient >> result: anObject [
 
 	result := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ApiClient >> saasBasePath [
+
+	^ 'https://app.armorcode.com'
 ]
 
 { #category : #accessing }
