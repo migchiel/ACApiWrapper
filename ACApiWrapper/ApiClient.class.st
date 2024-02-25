@@ -23,12 +23,71 @@ ApiClient >> connection [
 	^ connection
 ]
 
+{ #category : #public }
+ApiClient >> create: anItemOrCollection [
+
+	self createRequestHelpers.
+	self createResponseHelpers.
+	result := (self ensureCollection: anItemOrCollection) collect: [
+		          :item |
+		          payload := item properties.
+		          self post ].
+	connectionHelper applyResponseHelpers.
+	^ result
+]
+
+{ #category : #'as yet unclassified' }
+ApiClient >> createRequestHelpers [
+
+connectionHelper
+		applyToRequest: {
+				JSONHelper.
+				PostHelper.
+				BodyHelper };
+		applyToResponse: { DtoFromResponseHelper }.
+
+]
+
+{ #category : #'as yet unclassified' }
+ApiClient >> createResponseHelpers [
+
+	connectionHelper
+		applyToResponse: { DtoFromResponseHelper }
+]
+
 { #category : #'actions api' }
 ApiClient >> delete [
 
 	connectionHelper  applyRequestHelpers.
 	result := connection executeRequest.
 	^ result
+]
+
+{ #category : #public }
+ApiClient >> delete: anItemOrCollection [
+
+	self deleteRequestHelpers.
+	self deleteResponseHelpers.
+	result := (self ensureCollection: anItemOrCollection) collect: [
+		          :item |
+		          payload := item.
+		          self delete ].
+	connectionHelper applyResponseHelpers.
+	^ result
+]
+
+{ #category : #'as yet unclassified' }
+ApiClient >> deleteRequestHelpers [
+
+connectionHelper applyToRequest: {
+			AddSegmentHelper.
+			DeleteHelper }.
+]
+
+{ #category : #'as yet unclassified' }
+ApiClient >> deleteResponseHelpers [
+
+	
 ]
 
 { #category : #'as yet unclassified' }
@@ -55,15 +114,24 @@ ApiClient >> fullPath [
 { #category : #'actions api' }
 ApiClient >> get [
 
-	connectionHelper
-		applyToRequest: {
-				JSONHelper.
-				GetHelper };
-		applyToResponse: { DtoFromResponseHelper };
-		applyRequestHelpers.
+	connectionHelper applyRequestHelpers.
 	result := connection executeRequest.
-	connectionHelper  applyResponseHelpers.
+	connectionHelper applyResponseHelpers.
 	^ result
+]
+
+{ #category : #'as yet unclassified' }
+ApiClient >> getRequestHelpers [
+
+	connectionHelper applyToRequest: {
+			JSONHelper.
+			GetHelper }
+]
+
+{ #category : #'as yet unclassified' }
+ApiClient >> getResponseHelpers [
+
+	connectionHelper applyToResponse: { DtoFromResponseHelper }
 ]
 
 { #category : #initialization }
@@ -122,6 +190,9 @@ ApiClient >> put [
 { #category : #'actions api' }
 ApiClient >> read [
 
+
+self getRequestHelpers.
+	self getResponseHelpers.
 	^ self get
 ]
 
@@ -147,4 +218,32 @@ ApiClient >> saasBasePath [
 ApiClient >> token [ 
 
 	^ token
+]
+
+{ #category : #public }
+ApiClient >> update: anItemOrCollection [
+
+	self updateRequestHelpers.
+	self updateResponseHelpers.
+	result := (self ensureCollection: anItemOrCollection) collect: [ :item |
+		  payload := item properties.
+		  self put ].
+	connectionHelper applyResponseHelpers.
+	^ result
+	
+]
+
+{ #category : #'as yet unclassified' }
+ApiClient >> updateRequestHelpers [
+
+	connectionHelper applyToRequest: {
+			JSONHelper.
+			PutHelper.
+			BodyHelper }.
+]
+
+{ #category : #'as yet unclassified' }
+ApiClient >> updateResponseHelpers [
+
+	
 ]
