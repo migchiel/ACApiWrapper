@@ -85,18 +85,17 @@ ApiClient >> deleteResponseHelpers [
 ]
 
 { #category : #types }
-ApiClient >> dtoClass [ 
+ApiClient >> dtoClass [
 
-	^ self subclassResponsibility 
+	^ ACSession
 ]
 
 { #category : #'helper methods' }
 ApiClient >> ensureCollection: aProductOrCollection [
 
 	^ aProductOrCollection isCollection
-		ifTrue: [ aProductOrCollection ]
-		ifFalse: [ Array with: aProductOrCollection ].
-
+		  ifTrue: [ aProductOrCollection ]
+		  ifFalse: [ Array with: aProductOrCollection ]
 ]
 
 { #category : #url }
@@ -216,4 +215,5 @@ ApiClient >> updateRequestHelpers [
 { #category : #'helper methods' }
 ApiClient >> updateResponseHelpers [
 
+	connectionHelper applyToResponse: { DtoFromResponseHelper }
 ]

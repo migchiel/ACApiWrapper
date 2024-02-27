@@ -7,7 +7,6 @@ Class {
 { #category : #'target resize' }
 PaginatedResponseHelper >> apply [
 
-	apiCall result: apiCall result content
-
+	apiCall result: apiCall result content.
 	
 ]
