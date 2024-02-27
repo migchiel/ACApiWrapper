@@ -83,9 +83,9 @@ ApiClient >> deleteResponseHelpers [
 ]
 
 { #category : #types }
-ApiClient >> dtoClass [
+ApiClient >> dtoClass [ 
 
-	^ ACSession
+	^ self subclassResponsibility 
 ]
 
 { #category : #'helper methods' }
