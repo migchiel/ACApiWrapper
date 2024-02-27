@@ -1,14 +1,13 @@
 Class {
 	#name : #SingleDtoFromResponseHelper,
-	#superclass : #ApiHelper,
+	#superclass : #Object,
 	#category : #'ACApiWrapper-Helpers'
 }
 
-{ #category : #'target resize' }
-SingleDtoFromResponseHelper >> apply [
+{ #category : #operations }
+SingleDtoFromResponseHelper class >> applyTo: anApiCall [
 
-	apiCall result: (
-			 apiCall dtoClass new
-				 properties: apiCall result;
-				 yourself )
+anApiCall result: (anApiCall dtoClass new
+			 properties: anApiCall result;
+			 yourself)
 ]

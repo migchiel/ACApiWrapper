@@ -1,11 +1,11 @@
 Class {
 	#name : #AddSegmentHelper,
-	#superclass : #ApiHelper,
+	#superclass : #Object,
 	#category : #'ACApiWrapper-Helpers'
 }
 
 { #category : #'target resize' }
-AddSegmentHelper >> apply [
+AddSegmentHelper class >> applyTo: anApiCall [
 
-	apiCall connection link addPathSegment: apiCall payload asString
+	anApiCall connection link addPathSegment: anApiCall payload asString
 ]

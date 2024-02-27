@@ -1,14 +1,14 @@
 Class {
 	#name : #DtoFromResponseHelper,
-	#superclass : #ApiHelper,
+	#superclass : #Object,
 	#category : #'ACApiWrapper-Helpers'
 }
 
-{ #category : #'target resize' }
-DtoFromResponseHelper >> apply [
+{ #category : #operations }
+DtoFromResponseHelper class >> applyTo: anApiCall [
 
-	apiCall result: (apiCall result collect: [ :item |
-			 apiCall dtoClass new
+anApiCall result: (anApiCall result collect: [ :item |
+			 anApiCall dtoClass new
 				 properties: item;
 				 yourself ])
 ]

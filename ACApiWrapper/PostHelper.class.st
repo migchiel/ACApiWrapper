@@ -1,11 +1,11 @@
 Class {
 	#name : #PostHelper,
-	#superclass : #ApiHelper,
+	#superclass : #Object,
 	#category : #'ACApiWrapper-Helpers'
 }
 
-{ #category : #'target resize' }
-PostHelper >> apply [
+{ #category : #operations }
+PostHelper class >> applyTo: anApiCall [
 
-	apiCall connection link method: #POST
+anApiCall connection link method: #POST
 ]

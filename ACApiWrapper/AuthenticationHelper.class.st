@@ -1,11 +1,11 @@
 Class {
 	#name : #AuthenticationHelper,
-	#superclass : #ApiHelper,
+	#superclass : #Object,
 	#category : #'ACApiWrapper-Helpers'
 }
 
-{ #category : #'target resize' }
-AuthenticationHelper >> apply [
+{ #category : #operations }
+AuthenticationHelper class >> applyTo: anApiCall [
 
-	apiCall connection link setBearerAuthentication: apiCall token
+	anApiCall connection link setBearerAuthentication: anApiCall token
 ]

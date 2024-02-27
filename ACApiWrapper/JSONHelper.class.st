@@ -1,12 +1,11 @@
 Class {
 	#name : #JSONHelper,
-	#superclass : #ApiHelper,
+	#superclass : #Object,
 	#category : #'ACApiWrapper-Helpers'
 }
 
-{ #category : #'target resize' }
-JSONHelper >> apply [
+{ #category : #operations }
+JSONHelper class >> applyTo: anApiCall [
 
-
-	apiCall connection link forJsonREST
+anApiCall connection link forJsonREST
 ]

@@ -1,10 +1,9 @@
 Class {
 	#name : #QueryHelper,
-	#superclass : #ApiHelper,
+	#superclass : #Object,
 	#category : #'ACApiWrapper-Helpers'
 }
 
-{ #category : #'target resize' }
-QueryHelper >> apply [
-
+{ #category : #operations }
+QueryHelper class >> applyTo: anApiCall [
 ]

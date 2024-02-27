@@ -1,14 +1,13 @@
 Class {
 	#name : #NoResponseHelper,
-	#superclass : #ApiHelper,
+	#superclass : #Object,
 	#category : #'ACApiWrapper-Helpers'
 }
 
-{ #category : #'target resize' }
-NoResponseHelper >> apply [
+{ #category : #operations }
+NoResponseHelper class >> applyTo: anApiCall [
 
-
-	apiCall connection link
+anApiCall connection link
 		contentReader: nil;
 		contentWriter: nil;
 		accept: ZnMimeType any

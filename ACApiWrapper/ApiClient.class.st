@@ -34,13 +34,11 @@ ApiClient >> create: anItemOrCollection [
 { #category : #'helper methods' }
 ApiClient >> createRequestHelpers [
 
-connectionHelper
+	connectionHelper
 		applyToRequest: {
 				JSONHelper.
 				PostHelper.
-				BodyHelper };
-		applyToResponse: { DtoFromResponseHelper }.
-
+				BodyHelper }
 ]
 
 { #category : #'helper methods' }

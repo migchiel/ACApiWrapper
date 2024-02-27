@@ -1,12 +1,11 @@
 Class {
 	#name : #UrlHelper,
-	#superclass : #ApiHelper,
+	#superclass : #Object,
 	#category : #'ACApiWrapper-Helpers'
 }
 
-{ #category : #private }
-UrlHelper >> apply [
+{ #category : #operations }
+UrlHelper class >> applyTo: anApiCall [
 
-
-	apiCall connection link url: apiCall fullPath
+anApiCall connection link url: anApiCall fullPath
 ]

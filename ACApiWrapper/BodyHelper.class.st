@@ -1,11 +1,11 @@
 Class {
 	#name : #BodyHelper,
-	#superclass : #ApiHelper,
+	#superclass : #Object,
 	#category : #'ACApiWrapper-Helpers'
 }
 
-{ #category : #'target resize' }
-BodyHelper >> apply [
+{ #category : #operations }
+BodyHelper class >> applyTo: anApiCall [
 
-	apiCall connection link contents: apiCall payload
+anApiCall connection link contents: anApiCall payload
 ]

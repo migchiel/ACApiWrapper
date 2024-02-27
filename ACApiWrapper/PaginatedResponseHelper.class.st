@@ -1,12 +1,11 @@
 Class {
 	#name : #PaginatedResponseHelper,
-	#superclass : #ApiHelper,
+	#superclass : #Object,
 	#category : #'ACApiWrapper-Helpers'
 }
 
-{ #category : #'target resize' }
-PaginatedResponseHelper >> apply [
+{ #category : #operations }
+PaginatedResponseHelper class >> applyTo: anApiCall [
 
-	apiCall result: apiCall result content.
-	
+anApiCall result: anApiCall result content
 ]

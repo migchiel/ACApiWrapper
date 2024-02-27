@@ -1,11 +1,11 @@
 Class {
 	#name : #DeleteHelper,
-	#superclass : #ApiHelper,
+	#superclass : #Object,
 	#category : #'ACApiWrapper-Helpers'
 }
 
-{ #category : #'target resize' }
-DeleteHelper >> apply [
+{ #category : #operations }
+DeleteHelper class >> applyTo: anApiCall [
 
-	apiCall connection link method: #DELETE
+anApiCall connection link method: #DELETE
 ]

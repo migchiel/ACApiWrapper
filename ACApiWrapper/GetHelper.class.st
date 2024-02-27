@@ -1,11 +1,11 @@
 Class {
 	#name : #GetHelper,
-	#superclass : #ApiHelper,
+	#superclass : #Object,
 	#category : #'ACApiWrapper-Helpers'
 }
 
-{ #category : #'target resize' }
-GetHelper >> apply [
+{ #category : #operations }
+GetHelper class >> applyTo: anApiCall [
 
-	apiCall connection link method: #GET
+anApiCall connection link method: #GET
 ]

@@ -30,25 +30,25 @@ ConnectionHelper >> apiClient: anObject [
 { #category : #'as yet unclassified' }
 ConnectionHelper >> applyRequestHelpers [
 
-	requestHelpers do: #apply
+	requestHelpers do: [ :helper | helper applyTo: apiClient ]
 ]
 
 { #category : #'as yet unclassified' }
 ConnectionHelper >> applyResponseHelpers [
 
-	responseHelpers do: #apply
+	responseHelpers do: [ :helper | helper applyTo: apiClient ]
 ]
 
 { #category : #'as yet unclassified' }
 ConnectionHelper >> applyToRequest: aHelperCollection [
 
-	requestHelpers addAll: (self instantiateHelpers: aHelperCollection)
+	requestHelpers addAll: aHelperCollection
 ]
 
 { #category : #'as yet unclassified' }
 ConnectionHelper >> applyToResponse: aHelperCollection [
 
-	responseHelpers addAll: (self instantiateHelpers: aHelperCollection)
+	responseHelpers addAll: aHelperCollection
 ]
 
 { #category : #initialization }
@@ -58,10 +58,4 @@ responseHelpers := OrderedCollection new.
 	requestHelpers := OrderedCollection new.
 
 
-]
-
-{ #category : #'as yet unclassified' }
-ConnectionHelper >> instantiateHelpers: aHelperCollection [
-
-	^ aHelperCollection collect: [ :helper | helper applyTo: apiClient ]
 ]
