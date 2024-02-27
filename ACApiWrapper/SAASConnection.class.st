@@ -8,12 +8,6 @@ Class {
 	#category : #'ACApiWrapper-Core'
 }
 
-{ #category : #'instance creation' }
-SAASConnection class >> for: anApiClient [
-
-	^ self basicNew initialize
-]
-
 { #category : #'as yet unclassified' }
 SAASConnection >> apiLimitDelay [
 

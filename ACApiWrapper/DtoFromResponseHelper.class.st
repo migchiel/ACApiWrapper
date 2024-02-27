@@ -7,7 +7,7 @@ Class {
 { #category : #operations }
 DtoFromResponseHelper class >> applyTo: anApiCall [
 
-anApiCall result: (anApiCall result collect: [ :item |
+	anApiCall payload: (anApiCall payload collect: [ :item |
 			 anApiCall dtoClass new
 				 properties: item;
 				 yourself ])

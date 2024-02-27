@@ -7,7 +7,7 @@ Class {
 { #category : #operations }
 SingleDtoFromResponseHelper class >> applyTo: anApiCall [
 
-anApiCall result: (anApiCall dtoClass new
-			 properties: anApiCall result;
+	anApiCall payload: (anApiCall dtoClass new
+			 properties: anApiCall payload;
 			 yourself)
 ]

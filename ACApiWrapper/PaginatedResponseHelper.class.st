@@ -7,5 +7,5 @@ Class {
 { #category : #operations }
 PaginatedResponseHelper class >> applyTo: anApiCall [
 
-anApiCall result: anApiCall result content
+	anApiCall payload: anApiCall payload content
 ]

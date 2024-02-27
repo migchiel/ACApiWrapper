@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'connection',
 		'token',
-		'result',
 		'payload',
 		'connectionHelper'
 	],
@@ -51,9 +50,9 @@ ApiClient >> createResponseHelpers [
 { #category : #'actions api' }
 ApiClient >> delete [
 
-	connectionHelper  applyRequestHelpers.
-	result := connection executeRequest.
-	^ result
+	connectionHelper applyRequestHelpers.
+	payload := connection executeRequest.
+	^ payload
 ]
 
 { #category : #public }
@@ -61,12 +60,12 @@ ApiClient >> delete: anItemOrCollection [
 
 	self deleteRequestHelpers.
 	self deleteResponseHelpers.
-	result := (self ensureCollection: anItemOrCollection) collect: [
+	payload := (self ensureCollection: anItemOrCollection) collect: [
 		          :item |
 		          payload := item.
 		          self delete ].
 	connectionHelper applyResponseHelpers.
-	^ result
+	^ payload
 ]
 
 { #category : #'helper methods' }
@@ -106,9 +105,9 @@ ApiClient >> fullPath [
 ApiClient >> get [
 
 	connectionHelper applyRequestHelpers.
-	result := connection executeRequest.
+	payload := connection executeRequest.
 	connectionHelper applyResponseHelpers.
-	^ result
+	^ payload
 ]
 
 { #category : #'helper methods' }
@@ -129,7 +128,7 @@ ApiClient >> getResponseHelpers [
 ApiClient >> initialize [
 
 	token := Smalltalk os environment at: 'acapi_token'.
-	connection := SAASConnection for: self.
+	connection := SAASConnection new.
 	connectionHelper := ConnectionHelper for: self.
 	connectionHelper applyToRequest: {
 			UrlHelper.
@@ -151,13 +150,13 @@ ApiClient >> payload: aPayload [
 { #category : #'actions api' }
 ApiClient >> performCreateOrUpdate: anItemOrCollection [
 
-	result := (self ensureCollection: anItemOrCollection) collect: [
+	payload := (self ensureCollection: anItemOrCollection) collect: [
 		          :item |
 		          payload := item properties.
-								connectionHelper applyRequestHelpers.
-								connection executeRequest ].
+		          connectionHelper applyRequestHelpers.
+		          connection executeRequest ].
 	connectionHelper applyResponseHelpers.
-	^ result
+	^ payload
 ]
 
 { #category : #'actions api' }
@@ -167,18 +166,6 @@ ApiClient >> read [
 self getRequestHelpers.
 	self getResponseHelpers.
 	^ self get
-]
-
-{ #category : #accessing }
-ApiClient >> result [
-
-	^ result
-]
-
-{ #category : #accessing }
-ApiClient >> result: anObject [
-
-	result := anObject
 ]
 
 { #category : #url }
