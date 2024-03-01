@@ -1,4 +1,4 @@
-# apiExperiments
+# ACApiWrapper
 
 ## Installation
 
@@ -6,7 +6,7 @@ You can load this project into Pharo using Metacello. Just open a playground and
 
 ```Smalltalk
 Metacello new
-  repository: 'github://migchiel/apiExperiments:master/releases/latest';
+  repository: 'github://migchiel/ACApiWrapper:master/releases/latest';
   baseline: 'ACApiWrapper';
   load.
 ```
