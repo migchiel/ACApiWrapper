@@ -7,7 +7,7 @@ Class {
 { #category : #url }
 AuditLogClient >> clientPathSegments [
 
-	^ '/user/audit/log/details/page?page=0&size=1000'
+	^ '/user/audit/log/details/page?page=0&size=10000&revisionType=LOGGED_IN'
 ]
 
 { #category : #types }

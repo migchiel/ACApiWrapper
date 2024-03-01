@@ -12,7 +12,7 @@ ACObject >> convertToTimeString: aUnixTimeMilliSeconds [
 
 	aUnixTimeMilliSeconds
 		ifNotNil: [
-			^ (ZTimestamp fromUnixTime: aUnixTimeMilliSeconds / 1000) ]
+		^ ZTimestamp fromUnixTime: aUnixTimeMilliSeconds / 1000 ]
 		ifNil: [ ^ 'null' ]
 ]
 
