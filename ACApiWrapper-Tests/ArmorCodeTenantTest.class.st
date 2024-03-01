@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #tests }
+ArmorCodeTenantTest >> testCreateUsingNew [
+
+	self should: [ ArmorCodeTenant new ] raise: Error
+]
+
+{ #category : #tests }
 ArmorCodeTenantTest >> testCreateWithUrl [
 
 	| tenant apiKey url |
