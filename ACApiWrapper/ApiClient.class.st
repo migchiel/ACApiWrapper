@@ -10,6 +10,14 @@ Class {
 	#category : #'ACApiWrapper-Core'
 }
 
+{ #category : #'as yet unclassified' }
+ApiClient >> applyDefaultRequestHelpers [
+
+	connectionHelper applyToRequest: {
+			UrlHelper.
+			AuthenticationHelper }
+]
+
 { #category : #url }
 ApiClient >> clientPathSegments [
 
@@ -25,6 +33,7 @@ ApiClient >> connection [
 { #category : #public }
 ApiClient >> create: anItemOrCollection [
 
+	connectionHelper resetHelpers.
 	self createRequestHelpers.
 	self createResponseHelpers.
 	^ self performCreateOrUpdate: anItemOrCollection
@@ -33,11 +42,11 @@ ApiClient >> create: anItemOrCollection [
 { #category : #'helper methods' }
 ApiClient >> createRequestHelpers [
 
-	connectionHelper
-		applyToRequest: {
-				JSONHelper.
-				PostHelper.
-				BodyHelper }
+	self applyDefaultRequestHelpers.
+	connectionHelper applyToRequest: {
+			JSONHelper.
+			PostHelper.
+			BodyHelper }
 ]
 
 { #category : #'helper methods' }
@@ -58,12 +67,13 @@ ApiClient >> delete [
 { #category : #public }
 ApiClient >> delete: anItemOrCollection [
 
+connectionHelper resetHelpers.
 	self deleteRequestHelpers.
 	self deleteResponseHelpers.
 	payload := (self ensureCollection: anItemOrCollection) collect: [
-		          :item |
-		          payload := item.
-		          self delete ].
+		           :item |
+		           payload := item.
+		           self delete ].
 	connectionHelper applyResponseHelpers.
 	^ payload
 ]
@@ -71,9 +81,10 @@ ApiClient >> delete: anItemOrCollection [
 { #category : #'helper methods' }
 ApiClient >> deleteRequestHelpers [
 
-connectionHelper applyToRequest: {
+	self applyDefaultRequestHelpers.
+	connectionHelper applyToRequest: {
 			AddSegmentHelper.
-			DeleteHelper }.
+			DeleteHelper }
 ]
 
 { #category : #'helper methods' }
@@ -113,6 +124,7 @@ ApiClient >> get [
 { #category : #'helper methods' }
 ApiClient >> getRequestHelpers [
 
+	self applyDefaultRequestHelpers.
 	connectionHelper applyToRequest: {
 			JSONHelper.
 			GetHelper }
@@ -129,10 +141,7 @@ ApiClient >> initialize [
 
 	token := Smalltalk os environment at: 'acapi_token'.
 	connection := SAASConnection new.
-	connectionHelper := ConnectionHelper for: self.
-	connectionHelper applyToRequest: {
-			UrlHelper.
-			AuthenticationHelper }
+	connectionHelper := ConnectionHelper for: self
 ]
 
 { #category : #accessing }
@@ -162,8 +171,8 @@ ApiClient >> performCreateOrUpdate: anItemOrCollection [
 { #category : #'actions api' }
 ApiClient >> read [
 
-
-self getRequestHelpers.
+	connectionHelper resetHelpers.
+	self getRequestHelpers.
 	self getResponseHelpers.
 	^ self get
 ]
@@ -183,18 +192,20 @@ ApiClient >> token [
 { #category : #public }
 ApiClient >> update: anItemOrCollection [
 
+	connectionHelper resetHelpers.
 	self updateRequestHelpers.
 	self updateResponseHelpers.
-	^ self performCreateOrUpdate: anItemOrCollection 
+	^ self performCreateOrUpdate: anItemOrCollection
 ]
 
 { #category : #'helper methods' }
 ApiClient >> updateRequestHelpers [
 
+	self applyDefaultRequestHelpers.
 	connectionHelper applyToRequest: {
 			JSONHelper.
 			PutHelper.
-			BodyHelper }.
+			BodyHelper }
 ]
 
 { #category : #'helper methods' }

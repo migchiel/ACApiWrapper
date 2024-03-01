@@ -59,3 +59,11 @@ responseHelpers := OrderedCollection new.
 
 
 ]
+
+{ #category : #initialization }
+ConnectionHelper >> resetHelpers [
+
+	requestHelpers removeAll.
+	responseHelpers removeAll.
+
+]
