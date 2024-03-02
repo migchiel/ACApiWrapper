@@ -35,6 +35,16 @@ ProductClient new delete: (ProductClient new read collect: #id).
 ]
 
 { #category : #'as yet unclassified' }
+Scripts >> getLogins [
+
+	<script: 'self new getLogins'>
+	(AuditLogClient new read collect: [ :entry |
+		String streamContents: [ :s |  
+		 s << entry message << ' at ' << entry createdAt << ' from '
+		 << entry clientIp ]]) inspect
+]
+
+{ #category : #'as yet unclassified' }
 Scripts >> getWorkloads [
 
 	<script: 'self new getWorkloads'>

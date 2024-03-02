@@ -11,8 +11,7 @@ Class {
 ACObject >> convertToTimeString: aUnixTimeMilliSeconds [
 
 	aUnixTimeMilliSeconds
-		ifNotNil: [
-		^ ZTimestamp fromUnixTime: aUnixTimeMilliSeconds / 1000 ]
+		ifNotNil: [ ^ (ZTimestamp fromUnixTime: aUnixTimeMilliSeconds / 1000) asString ]
 		ifNil: [ ^ 'null' ]
 ]
 
