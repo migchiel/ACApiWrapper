@@ -5,9 +5,9 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ACScripts >> createWorkloads [
+ACScripts >> createProducts [
 
-	<script: 'self new createWorkloads'>
+	<script: 'self new createProducts'>
 	| productTypes products |
 	productTypes := ProductTypeClient new read.
 	products := ProductClient new create: {
@@ -25,13 +25,10 @@ ACScripts >> createWorkloads [
 ]
 
 { #category : #'as yet unclassified' }
-ACScripts >> deleteWorkloads [
+ACScripts >> deleteProducts [
 
-<script: 'self new deleteWorkloads'>
-	
-ProductClient new delete: (ProductClient new read collect: #id).
-
-
+	<script: 'self new deleteProducts'>
+	ProductClient new delete: (ProductClient new read collect: #id)
 ]
 
 { #category : #'as yet unclassified' }
@@ -47,16 +44,48 @@ ACScripts >> getLogins [
 ]
 
 { #category : #'as yet unclassified' }
-ACScripts >> getWorkloads [
+ACScripts >> getProductTypes [
 
-	<script: 'self new getWorkloads'>
-	ACApiItemView openWith: (	ProductClient new read collect: #name )
+	<script: 'self new getProductTypes'>
+	ACApiItemView openWith: (ProductTypeClient new read collect: #name)
 ]
 
 { #category : #'as yet unclassified' }
-ACScripts >> updateWorkloads [
+ACScripts >> getProducts [
 
-	<script: 'self new updateWorkloads'>
+	<script: 'self new getProducts'>
+	ACApiItemView openWith: (ProductClient new read collect: #name)
+]
+
+{ #category : #'as yet unclassified' }
+ACScripts >> getSessionDetails [
+
+	<script: 'self new getSessionDetails'>
+	| sessionDetails |
+	sessionDetails := SessionClient new read.
+	ACApiItemView openWith: {
+			'Organisation   : ', sessionDetails currentOrgSessionDto name.
+			'Organisation ID: ', sessionDetails currentOrgSessionDto id asString }
+]
+
+{ #category : #'as yet unclassified' }
+ACScripts >> getSubProductTypes [
+
+	<script: 'self new getSubProductTypes'>
+	ACApiItemView openWith: (SubProductTypeClient new read collect: #name)
+]
+
+{ #category : #'as yet unclassified' }
+ACScripts >> getSubProducts [
+
+	<script: 'self new getSubProducts'>
+	ACApiItemView openWith: (SubProductClient new read collect: #name)
+]
+
+{ #category : #'as yet unclassified' }
+ACScripts >> updateProducts [
+
+	<script: 'self new updateProducts'>
 	| products client |
 	client := ProductClient new.
 	products := client read.
