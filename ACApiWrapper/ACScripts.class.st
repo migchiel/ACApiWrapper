@@ -21,8 +21,7 @@ ACScripts >> createWorkloads [
 				             description: 'Some description';
 				             type: productTypes atRandom;
 				             yourself) }.
-	(products collect: #name).
-	ACApiItemView openWith: products
+	ACApiItemView openWith: (products collect: #name)
 ]
 
 { #category : #'as yet unclassified' }
@@ -61,9 +60,9 @@ ACScripts >> updateWorkloads [
 	| products client |
 	client := ProductClient new.
 	products := client read.
-	(client update: (products collect: [ :p |
-			  p
-				  name: p name , '-updated';
-				  yourself ])).
-		client inspect
+	products := client update: (products collect: [ :p |
+			             p
+				             name: p name , '-updated';
+				             yourself ]).
+	ACApiItemView openWith: (products collect: #name)
 ]
