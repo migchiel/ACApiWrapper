@@ -7,7 +7,7 @@ Class {
 { #category : #url }
 AuditLogClient >> clientPathSegments [
 
-	^ '/user/audit/log/details/page?page=0&size=10000&revisionType=LOGGED_IN'
+	^ '/user/audit/log/details/page?page=0&size=10&revisionType=LOGGED_IN'
 ]
 
 { #category : #types }
@@ -19,5 +19,6 @@ AuditLogClient >> dtoClass [
 { #category : #'helper methods' }
 AuditLogClient >> getResponseHelpers [
 
-	connectionHelper applyToResponse: { PaginatedResponseHelper . DtoFromResponseHelper  }
+	connectionHelper applyToResponse: {
+			PaginatedResponseHelper }
 ]

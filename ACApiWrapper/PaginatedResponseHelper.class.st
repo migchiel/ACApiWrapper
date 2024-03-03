@@ -7,5 +7,12 @@ Class {
 { #category : #operations }
 PaginatedResponseHelper class >> applyTo: anApiCall [
 
-	anApiCall payload: anApiCall payload content
+	| pagedObject |
+	
+	pagedObject := ACPagedObject new.
+	pagedObject properties: anApiCall payload.
+	anApiCall payload: anApiCall payload content.
+	DtoFromResponseHelper applyTo: anApiCall.
+	pagedObject properties content: anApiCall payload.
+	anApiCall payload: pagedObject 
 ]

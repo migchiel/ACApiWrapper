@@ -1,11 +1,11 @@
 Class {
-	#name : #Scripts,
+	#name : #ACScripts,
 	#superclass : #Object,
 	#category : #'ACApiWrapper-Scripts'
 }
 
 { #category : #'as yet unclassified' }
-Scripts >> createWorkloads [
+ACScripts >> createWorkloads [
 
 	<script: 'self new createWorkloads'>
 	| productTypes products |
@@ -21,11 +21,12 @@ Scripts >> createWorkloads [
 				             description: 'Some description';
 				             type: productTypes atRandom;
 				             yourself) }.
-	(products collect: #name) inspect
+	(products collect: #name).
+	ACApiItemView openWith: products
 ]
 
 { #category : #'as yet unclassified' }
-Scripts >> deleteWorkloads [
+ACScripts >> deleteWorkloads [
 
 <script: 'self new deleteWorkloads'>
 	
@@ -35,24 +36,26 @@ ProductClient new delete: (ProductClient new read collect: #id).
 ]
 
 { #category : #'as yet unclassified' }
-Scripts >> getLogins [
+ACScripts >> getLogins [
 
 	<script: 'self new getLogins'>
-	(AuditLogClient new read collect: [ :entry |
-		String streamContents: [ :s |  
-		 s << entry message << ' at ' << entry createdAt << ' from '
-		 << entry clientIp ]]) inspect
+	| logins |
+	logins := AuditLogClient new read content collect: [ :entry |
+		 String streamContents: [ :s |
+			 s << entry message << ' at ' << entry createdAt << ' from '
+			 << entry clientIp ] ].
+	ACApiItemView openWith: logins.
 ]
 
 { #category : #'as yet unclassified' }
-Scripts >> getWorkloads [
+ACScripts >> getWorkloads [
 
 	<script: 'self new getWorkloads'>
-	(ProductClient new read collect: #name) inspect
+	ACApiItemView openWith: (	ProductClient new read collect: #name )
 ]
 
 { #category : #'as yet unclassified' }
-Scripts >> updateWorkloads [
+ACScripts >> updateWorkloads [
 
 	<script: 'self new updateWorkloads'>
 	| products client |
