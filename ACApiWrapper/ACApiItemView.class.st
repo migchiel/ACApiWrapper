@@ -3,8 +3,6 @@ Class {
 	#superclass : #SpListPresenter,
 	#instVars : [
 		'table',
-		'label',
-		'selectedItems',
 		'items'
 	],
 	#category : #'ACApiWrapper-Scripts'

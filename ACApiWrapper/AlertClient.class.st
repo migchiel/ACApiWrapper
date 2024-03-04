@@ -15,3 +15,9 @@ AlertClient >> dtoClass [
 
 	^ ACAlert 
 ]
+
+{ #category : #'helper methods' }
+AlertClient >> getResponseHelpers [
+
+	connectionHelper applyToResponse: { PaginatedResponseHelper }
+]

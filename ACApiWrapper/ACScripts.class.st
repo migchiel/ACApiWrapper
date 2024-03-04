@@ -32,6 +32,17 @@ ACScripts >> deleteProducts [
 ]
 
 { #category : #'as yet unclassified' }
+ACScripts >> getAlerts [
+
+	<script: 'self new getAlerts'>
+	| alerts |
+	alerts := AlertClient new read content collect: [ :entry |
+		          String streamContents: [ :s |
+			          s << entry title << ' at ' << entry createdAt] ].
+	ACApiItemView openWith: alerts 
+]
+
+{ #category : #'as yet unclassified' }
 ACScripts >> getLogins [
 
 	<script: 'self new getLogins'>
@@ -80,6 +91,13 @@ ACScripts >> getSubProducts [
 
 	<script: 'self new getSubProducts'>
 	ACApiItemView openWith: (SubProductClient new read collect: #name)
+]
+
+{ #category : #'as yet unclassified' }
+ACScripts >> getUsers [
+
+	<script: 'self new getUsers'>
+	ACApiItemView openWith: (UserClient new read collect: #name)
 ]
 
 { #category : #'as yet unclassified' }
