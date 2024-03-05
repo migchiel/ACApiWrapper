@@ -1,11 +1,11 @@
 Class {
-	#name : #DtoFromResponseHelper,
+	#name : #MultipleDtoFromResponseHelper,
 	#superclass : #Object,
 	#category : #'ACApiWrapper-Helpers'
 }
 
 { #category : #operations }
-DtoFromResponseHelper class >> applyTo: anApiCall [
+MultipleDtoFromResponseHelper class >> applyTo: anApiCall [
 
 	anApiCall payload: (anApiCall payload collect: [ :item |
 			 anApiCall dtoClass new

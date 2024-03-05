@@ -8,11 +8,7 @@ Class {
 PaginatedResponseHelper class >> applyTo: anApiCall [
 
 	| pagedObject |
-	
 	pagedObject := ACPagedObject new.
 	pagedObject properties: anApiCall payload.
-	anApiCall payload: anApiCall payload content.
-	DtoFromResponseHelper applyTo: anApiCall.
-	pagedObject properties content: anApiCall payload.
-	anApiCall payload: pagedObject 
+	anApiCall payload: pagedObject
 ]

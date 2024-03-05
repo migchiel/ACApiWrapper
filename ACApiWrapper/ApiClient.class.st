@@ -52,8 +52,6 @@ ApiClient >> createRequestHelpers [
 { #category : #'helper methods' }
 ApiClient >> createResponseHelpers [
 
-	connectionHelper
-		applyToResponse: { DtoFromResponseHelper }
 ]
 
 { #category : #'actions api' }
@@ -132,8 +130,6 @@ ApiClient >> getRequestHelpers [
 
 { #category : #'helper methods' }
 ApiClient >> getResponseHelpers [
-
-	connectionHelper applyToResponse: { DtoFromResponseHelper }
 ]
 
 { #category : #initialization }
@@ -160,10 +156,10 @@ ApiClient >> payload: aPayload [
 ApiClient >> performCreateOrUpdate: anItemOrCollection [
 
 	payload := (self ensureCollection: anItemOrCollection) collect: [
-		          :item |
-		          payload := item properties.
-		          connectionHelper applyRequestHelpers.
-		          connection executeRequest ].
+		           :item |
+		           payload := item properties.
+		           connectionHelper applyRequestHelpers.
+		           connection executeRequest ].
 	connectionHelper applyResponseHelpers.
 	^ payload
 ]
@@ -211,5 +207,5 @@ ApiClient >> updateRequestHelpers [
 { #category : #'helper methods' }
 ApiClient >> updateResponseHelpers [
 
-	connectionHelper applyToResponse: { DtoFromResponseHelper }
+	connectionHelper applyToResponse: { MultipleDtoFromResponseHelper }
 ]

@@ -19,6 +19,5 @@ AuditLogClient >> dtoClass [
 { #category : #'helper methods' }
 AuditLogClient >> getResponseHelpers [
 
-	connectionHelper applyToResponse: {
-			PaginatedResponseHelper }
+	connectionHelper applyToResponse: { PaginatedResponseHelper . PaginatedContentHelper }
 ]

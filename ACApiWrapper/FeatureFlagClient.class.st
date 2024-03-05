@@ -17,7 +17,8 @@ FeatureFlagClient >> dtoClass [
 ]
 
 { #category : #'helper methods' }
-FeatureFlagClient >> getResponseHelpers [ 
+FeatureFlagClient >> getResponseHelpers [
 
+connectionHelper applyToResponse: { MultipleDtoFromResponseHelper }
 	
 ]

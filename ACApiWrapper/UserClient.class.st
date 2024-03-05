@@ -15,3 +15,9 @@ UserClient >> dtoClass [
 
 	^ ACUser
 ]
+
+{ #category : #'helper methods' }
+UserClient >> getRequestHelpers [
+
+	connectionHelper applyToResponse: { MultipleDtoFromResponseHelper }
+]
