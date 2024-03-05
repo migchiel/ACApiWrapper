@@ -7,5 +7,5 @@ Class {
 { #category : #'target resize' }
 AddSegmentHelper class >> applyTo: anApiCall [
 
-	anApiCall connection link addPathSegment: anApiCall payload asString
+	anApiCall connection connection addPathSegment: anApiCall payload asString
 ]

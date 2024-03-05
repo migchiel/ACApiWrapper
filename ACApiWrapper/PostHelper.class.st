@@ -7,5 +7,5 @@ Class {
 { #category : #operations }
 PostHelper class >> applyTo: anApiCall [
 
-anApiCall connection link method: #POST
+	anApiCall connection connection method: #POST
 ]

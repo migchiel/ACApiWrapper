@@ -7,5 +7,5 @@ Class {
 { #category : #operations }
 DeleteHelper class >> applyTo: anApiCall [
 
-anApiCall connection link method: #DELETE
+	anApiCall connection connection method: #DELETE
 ]

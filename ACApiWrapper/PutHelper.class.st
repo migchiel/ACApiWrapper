@@ -7,5 +7,5 @@ Class {
 { #category : #operations }
 PutHelper class >> applyTo: anApiCall [
 
-anApiCall connection link method: #PUT
+	anApiCall connection connection method: #PUT
 ]

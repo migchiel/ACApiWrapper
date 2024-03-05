@@ -7,5 +7,5 @@ Class {
 { #category : #operations }
 AuthenticationHelper class >> applyTo: anApiCall [
 
-	anApiCall connection link setBearerAuthentication: anApiCall token
+	anApiCall connection connection setBearerAuthentication: anApiCall token
 ]

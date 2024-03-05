@@ -1,27 +1,40 @@
 Class {
-	#name : #SAASConnection,
+	#name : #ACConnection,
 	#superclass : #Object,
 	#instVars : [
 		'apiClient',
-		'link'
+		'connection'
 	],
 	#category : #'ACApiWrapper-Core'
 }
 
 { #category : #'as yet unclassified' }
-SAASConnection >> apiLimitDelay [
+ACConnection >> apiLimitDelay [
 
 	"retry wait time for HTTP 429, api rate limit (in seconds)"
 	^ 64
 ]
 
 { #category : #'as yet unclassified' }
-SAASConnection >> executeRequest [
+ACConnection >> authenticateUsing: anApiKey [
 
-UIManager default informUserDuring: [ :bar |
+	connection setBearerAuthentication:
+		anApiKey 
+]
+
+{ #category : #accessing }
+ACConnection >> connection [
+
+	^ connection
+]
+
+{ #category : #'as yet unclassified' }
+ACConnection >> executeRequest [
+
+	UIManager default informUserDuring: [ :bar |
 		bar label: 'Performing API call...'.
 		[
-		^ link
+		^ connection
 			  ifFail: [ :exception |
 				  ((exception isKindOf: ZnHttpUnsuccessful) and: [
 						   #( 429 ) includes: exception response code ]) ifTrue: [
@@ -35,22 +48,23 @@ UIManager default informUserDuring: [ :bar |
 				progress resume ] ]
 ]
 
+{ #category : #'actions api' }
+ACConnection >> get [
+
+	connection forJsonREST.
+	^ connection get
+]
+
 { #category : #initialization }
-SAASConnection >> initialize [ 
+ACConnection >> initialize [ 
 
 	self setupConnection
 
 	
 ]
 
-{ #category : #accessing }
-SAASConnection >> link [
-
-	^ link
-]
-
 { #category : #'as yet unclassified' }
-SAASConnection >> recoverFromApiLimit [
+ACConnection >> recoverFromApiLimit [
 
 	1 to: self apiLimitDelay do: [ :each |
 		HTTPProgress
@@ -63,13 +77,19 @@ SAASConnection >> recoverFromApiLimit [
 ]
 
 { #category : #'as yet unclassified' }
-SAASConnection >> setupConnection [
+ACConnection >> setupConnection [
 
-	link := ZnClient new
-		              systemPolicy;
-		              logLevel: 3;
-		              signalProgress: false;
-		              autoResetEntityMethods: #( HEAD DELETE GET );
-		              logToTranscript;
-		              yourself
+	connection := ZnClient new
+		        systemPolicy;
+		        logLevel: 3;
+		        signalProgress: false;
+		        autoResetEntityMethods: #( HEAD DELETE GET );
+		        logToTranscript;
+		        yourself
+]
+
+{ #category : #accessing }
+ACConnection >> url: aUrl [
+
+	connection url: aUrl
 ]

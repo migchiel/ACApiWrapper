@@ -7,5 +7,5 @@ Class {
 { #category : #operations }
 BodyHelper class >> applyTo: anApiCall [
 
-anApiCall connection link contents: anApiCall payload
+	anApiCall connection connection contents: anApiCall payload
 ]

@@ -7,5 +7,5 @@ Class {
 { #category : #operations }
 PatchHelper class >> applyTo: anApiCall [
 
-anApiCall connection link method: #PATCH
+	anApiCall connection connection method: #PATCH
 ]

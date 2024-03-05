@@ -7,5 +7,5 @@ Class {
 { #category : #operations }
 GetHelper class >> applyTo: anApiCall [
 
-anApiCall connection link method: #GET
+	anApiCall connection connection method: #GET
 ]

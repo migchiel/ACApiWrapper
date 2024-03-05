@@ -7,7 +7,7 @@ Class {
 { #category : #operations }
 NoResponseHelper class >> applyTo: anApiCall [
 
-anApiCall connection link
+	anApiCall connection connection
 		contentReader: nil;
 		contentWriter: nil;
 		accept: ZnMimeType any

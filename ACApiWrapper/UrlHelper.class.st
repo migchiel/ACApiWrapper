@@ -7,5 +7,5 @@ Class {
 { #category : #operations }
 UrlHelper class >> applyTo: anApiCall [
 
-anApiCall connection link url: anApiCall fullPath
+	anApiCall connection connection url: anApiCall fullPath
 ]

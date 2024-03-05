@@ -136,7 +136,7 @@ ApiClient >> getResponseHelpers [
 ApiClient >> initialize [
 
 	token := Smalltalk os environment at: 'acapi_token'.
-	connection := SAASConnection new.
+	connection := ACConnection new.
 	connectionHelper := ConnectionHelper for: self
 ]
 

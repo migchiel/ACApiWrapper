@@ -2,8 +2,10 @@ Class {
 	#name : #ArmorCodeTenant,
 	#superclass : #Object,
 	#instVars : [
-		'url',
-		'apiKey'
+		'apiKey',
+		'request',
+		'saasUrl',
+		'connection'
 	],
 	#category : #'ACApiWrapper-Core'
 }
@@ -11,12 +13,12 @@ Class {
 { #category : #'as yet unclassified' }
 ArmorCodeTenant class >> connectTo: aUrl usingApiKey: anApiKey [
 
-	| aWorkbench |
-	aWorkbench := self basicNew.
-	aWorkbench
+	| tenant |
+	tenant := self basicNew.
+	tenant
 		url: aUrl;
 		apiKey: anApiKey;initialize.
-	^ aWorkbench
+	^ tenant
 ]
 
 { #category : #'as yet unclassified' }
@@ -34,8 +36,7 @@ ArmorCodeTenant class >> defaultTenant [
 { #category : #'instance creation' }
 ArmorCodeTenant class >> new [
 
-	self error:
-		'An ArmorCodeTenant connection is created using ''connectUsingApiKey:'' or ''connectTo: usingApiKey:'''
+	^ self connectUsingApiKey: (Smalltalk os environment at: 'acapi_token')
 ]
 
 { #category : #accessing }
@@ -49,13 +50,55 @@ ArmorCodeTenant >> apiKey: anApiKey [
 	apiKey := anApiKey 
 ]
 
+{ #category : #'as yet unclassified' }
+ArmorCodeTenant >> basePath [
+
+	^ ZnUrl fromString: saasUrl
+]
+
+{ #category : #'as yet unclassified' }
+ArmorCodeTenant >> createPathFor: anEndpoint [
+
+	^ self basePath + anEndpoint.
+	
+]
+
+{ #category : #'as yet unclassified' }
+ArmorCodeTenant >> getProducts [
+
+	request := self createPathFor: '/user/product/elastic/paged'.
+	request := request ? (#environmentName -> #STAGING)
+	           & (#pageSize -> 20) & (#pageNumber -> 0) & (#tags -> #'')
+	           & (#sortBy -> #NAME) & (#direction -> #ASC).
+	connection url: request.
+	^ connection get
+]
+
+{ #category : #'as yet unclassified' }
+ArmorCodeTenant >> getSubProducts [
+
+	request := self createPathFor: '/user/sub-product/elastic'.
+	request := request ? (#environmentName -> #STAGING)
+	           & (#pageSize -> 20) & (#pageNumber -> 0) & (#tags -> #'')
+	           & (#sortBy -> #NAME) & (#direction -> #ASC).
+	connection url: request.
+	^ connection get
+]
+
+{ #category : #initialization }
+ArmorCodeTenant >> initialize [
+
+	connection := ACConnection new.
+	connection authenticateUsing: apiKey
+]
+
 { #category : #accessing }
 ArmorCodeTenant >> url [
-	^ url
+	^ saasUrl
 ]
 
 { #category : #accessing }
 ArmorCodeTenant >> url: aUrl [
 
-	url := aUrl
+	saasUrl := aUrl
 ]

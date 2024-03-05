@@ -7,5 +7,5 @@ Class {
 { #category : #operations }
 JSONHelper class >> applyTo: anApiCall [
 
-anApiCall connection link forJsonREST
+	anApiCall connection connection forJsonREST
 ]
