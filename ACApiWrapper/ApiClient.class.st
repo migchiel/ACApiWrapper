@@ -5,10 +5,41 @@ Class {
 		'connection',
 		'token',
 		'payload',
-		'connectionHelper'
+		'connectionHelper',
+		'url'
 	],
 	#category : #'ACApiWrapper-Core'
 }
+
+{ #category : #'as yet unclassified' }
+ApiClient class >> connectTo: aUrl withApiKey: anApiKey [
+
+	| tenant |
+	tenant := self basicNew.
+	tenant
+		token: anApiKey;
+		url: aUrl;
+		initialize.
+	^ tenant
+]
+
+{ #category : #'as yet unclassified' }
+ApiClient class >> connectUsingApiKey: anApiKey [
+
+	^ self connectTo: self defaultTenant withApiKey: anApiKey
+]
+
+{ #category : #'as yet unclassified' }
+ApiClient class >> defaultTenant [
+
+	^ 'https://app.armorcode.com'
+]
+
+{ #category : #'instance creation' }
+ApiClient class >> new [
+
+	^ self connectUsingApiKey: (Smalltalk os environment at: 'acapi_token')
+]
 
 { #category : #'as yet unclassified' }
 ApiClient >> applyDefaultRequestHelpers [
@@ -135,7 +166,6 @@ ApiClient >> getResponseHelpers [
 { #category : #initialization }
 ApiClient >> initialize [
 
-	token := Smalltalk os environment at: 'acapi_token'.
 	connection := ACConnection new.
 	connectionHelper := ConnectionHelper for: self
 ]
@@ -176,13 +206,19 @@ ApiClient >> read [
 { #category : #url }
 ApiClient >> saasBasePath [
 
-	^ 'https://app.armorcode.com'
+	^ url
 ]
 
 { #category : #accessing }
 ApiClient >> token [ 
 
 	^ token
+]
+
+{ #category : #accessing }
+ApiClient >> token: anApiToken [
+
+	token := anApiToken 
 ]
 
 { #category : #public }
@@ -208,4 +244,10 @@ ApiClient >> updateRequestHelpers [
 ApiClient >> updateResponseHelpers [
 
 	connectionHelper applyToResponse: { MultipleDtoFromResponseHelper }
+]
+
+{ #category : #accessing }
+ApiClient >> url: aUrl [
+
+	url := aUrl 
 ]
