@@ -6,3 +6,9 @@ Class {
 	],
 	#category : #'ACApiWrapper-Scripts'
 }
+
+{ #category : #initialization }
+ACScripts >> initialize [ 
+
+	
+]

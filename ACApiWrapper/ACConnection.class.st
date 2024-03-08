@@ -23,6 +23,12 @@ ACConnection >> authenticateUsing: anApiKey [
 ]
 
 { #category : #accessing }
+ACConnection >> body: aPayload [
+
+	connection contents: aPayload
+]
+
+{ #category : #accessing }
 ACConnection >> connection [
 
 	^ connection
@@ -48,19 +54,23 @@ ACConnection >> executeRequest [
 				progress resume ] ]
 ]
 
-{ #category : #'actions api' }
-ACConnection >> get [
+{ #category : #initialization }
+ACConnection >> initialize [
 
-	connection forJsonREST.
-	^ connection get
+	connection := ZnClient new
+		              systemPolicy;
+											forJsonREST;
+		              logLevel: 3;
+		              signalProgress: false;
+		              autoResetEntityMethods: #( HEAD DELETE GET );
+		              logToTranscript;
+		              yourself
 ]
 
-{ #category : #initialization }
-ACConnection >> initialize [ 
+{ #category : #accessing }
+ACConnection >> method: aHttpMethod [
 
-	self setupConnection
-
-	
+	connection method: aHttpMethod 
 ]
 
 { #category : #'as yet unclassified' }
