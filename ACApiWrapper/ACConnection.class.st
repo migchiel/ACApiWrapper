@@ -2,11 +2,18 @@ Class {
 	#name : #ACConnection,
 	#superclass : #Object,
 	#instVars : [
-		'apiClient',
-		'connection'
+		'tenant',
+		'connection',
+		'request'
 	],
 	#category : #'ACApiWrapper-Core'
 }
+
+{ #category : #'instance creation' }
+ACConnection class >> for: aTenant [
+
+	^ self new tenant: aTenant
+]
 
 { #category : #'as yet unclassified' }
 ACConnection >> apiLimitDelay [
@@ -22,16 +29,26 @@ ACConnection >> authenticateUsing: anApiKey [
 		anApiKey 
 ]
 
-{ #category : #accessing }
-ACConnection >> body: aPayload [
+{ #category : #'as yet unclassified' }
+ACConnection >> basePath [
 
-	connection contents: aPayload
+	^ tenant url asZnUrl
 ]
 
 { #category : #accessing }
 ACConnection >> connection [
 
 	^ connection
+]
+
+{ #category : #'submorphs - add/remove' }
+ACConnection >> delete: aUrl [
+
+	self authenticateUsing: tenant apiKey.
+	^ connection
+		  url: self basePath / request;
+		  method: #DELETE;
+		  executeRequest
 ]
 
 { #category : #'as yet unclassified' }
@@ -54,6 +71,16 @@ ACConnection >> executeRequest [
 				progress resume ] ]
 ]
 
+{ #category : #operations }
+ACConnection >> get: aUrl [
+
+	self authenticateUsing: tenant apiKey.
+	connection
+		  url: self basePath / aUrl;
+		  method: #GET.
+		  ^ self executeRequest
+]
+
 { #category : #initialization }
 ACConnection >> initialize [
 
@@ -67,10 +94,25 @@ ACConnection >> initialize [
 		              yourself
 ]
 
-{ #category : #accessing }
-ACConnection >> method: aHttpMethod [
+{ #category : #'as yet unclassified' }
+ACConnection >> post: aUrl withPayload: aPayload [
+	self authenticateUsing: tenant apiKey.
+	connection
+		url: self basePath / aUrl;
+		contents: aPayload;
+		method: #POST.
+	^ self executeRequest
+]
 
-	connection method: aHttpMethod 
+{ #category : #'as yet unclassified' }
+ACConnection >> put: aUrl withPayload: aPayload [
+
+	self authenticateUsing: tenant apiKey.
+	connection
+		url: self basePath / aUrl;
+		contents: aPayload;
+		method: #PUT.
+	^ self executeRequest
 ]
 
 { #category : #'as yet unclassified' }
@@ -96,6 +138,12 @@ ACConnection >> setupConnection [
 		        autoResetEntityMethods: #( HEAD DELETE GET );
 		        logToTranscript;
 		        yourself
+]
+
+{ #category : #accessing }
+ACConnection >> tenant: aTenant [
+
+	tenant := aTenant 
 ]
 
 { #category : #accessing }

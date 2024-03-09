@@ -4,8 +4,8 @@ Class {
 	#instVars : [
 		'apiKey',
 		'request',
-		'saasUrl',
-		'connection'
+		'connection',
+		'url'
 	],
 	#category : #'ACApiWrapper-Core'
 }
@@ -53,7 +53,7 @@ ArmorCodeTenant >> apiKey: anApiKey [
 { #category : #'as yet unclassified' }
 ArmorCodeTenant >> basePath [
 
-	^ ZnUrl fromString: saasUrl
+	^ ZnUrl fromString: url
 ]
 
 { #category : #accessing }
@@ -69,141 +69,102 @@ ArmorCodeTenant >> createPathForRequest: anEndpoint [
 ]
 
 { #category : #'as yet unclassified' }
-ArmorCodeTenant >> delete [
-
-	^ connection
-		  url: request;
-		  method: #DELETE;
-		  executeRequest
-]
-
-{ #category : #'as yet unclassified' }
-ArmorCodeTenant >> get [
-
-	^ connection
-		  url: request;
-		  method: #GET;
-		  executeRequest
-]
-
-{ #category : #'as yet unclassified' }
 ArmorCodeTenant >> getAlerts [
 
-	request := (self createPathForRequest: '/api/alerts').
-	^ self get
+	^ connection get: '/api/alerts' asZnUrl.
+
 ]
 
 { #category : #'as yet unclassified' }
 ArmorCodeTenant >> getAuditLogs [
 
-	request := (self createPathForRequest: '/user/audit/log/details/page') ? (#page -> 0) & (#size -> 10) & (#revisionType -> 'LOGGED_IN').
-	^ self get
+	^ connection get: '/user/audit/log/details/page' asZnUrl 
+	           ? (#page -> 0) & (#size -> 10)
+	           & (#revisionType -> 'LOGGED_IN').
+
 ]
 
 { #category : #'as yet unclassified' }
 ArmorCodeTenant >> getFeatureFlags [
 
-	request := self createPathForRequest: '/user/feature-flag'.
-	^ self get
+	^ connection get:  '/user/feature-flag' asZnUrl 
+
 ]
 
 { #category : #'as yet unclassified' }
 ArmorCodeTenant >> getFindings [
 
-	request := self createPathForRequest: '/user/findings/'.
-	self body: (NeoJSONObject fromString: '{"page":0,"size":100,"sort":"","sortColumns":[],"filters":{},"ticketStatusRequired":true,"ignoreMitigated":null,"ignoreDuplicate":true}').
-	^ self post
+	^ connection post: '/user/findings/' asZnUrl withPayload: (NeoJSONObject fromString:
+			 '{"page":0,"size":100,"sort":"","sortColumns":[],"filters":{},"ticketStatusRequired":true,"ignoreMitigated":null,"ignoreDuplicate":true}')
 ]
 
 { #category : #'as yet unclassified' }
 ArmorCodeTenant >> getProductTypes [
 
-	request := self createPathForRequest: '/user/product-type'.
-	^ self get
+	^ connection get: '/user/product-type' asZnUrl 
+
 ]
 
 { #category : #'as yet unclassified' }
 ArmorCodeTenant >> getProducts [
 
-	request := (self createPathForRequest:
-		           '/user/product/elastic/paged')
-		           ? (#environmentName -> #STAGING) & (#pageSize -> 20)
-		           & (#pageNumber -> 0) & (#tags -> #'')
-		           & (#sortBy -> #NAME) & (#direction -> #ASC).
-	^ self get
+	^ connection get:
+		  ('/user/product/elastic/paged' asZnUrl
+		  ? (#environmentName -> #STAGING) & (#pageSize -> 20)
+		  & (#pageNumber -> 0) & (#tags -> #'') & (#sortBy -> #NAME)
+		  & (#direction -> #ASC))
 ]
 
 { #category : #'as yet unclassified' }
 ArmorCodeTenant >> getSessionDetails [
 
-	request := self createPathForRequest: '/user/details/session'.
-	^ self get
+^ connection get: '/user/details/session' asZnUrl 
+
 ]
 
 { #category : #'as yet unclassified' }
 ArmorCodeTenant >> getSubProductTypes [
 
-	request := self createPathForRequest: '/user/sub-product-type'.
-	^ self get
+	^ connection get: '/user/sub-product-type' asZnUrl.
+	
 ]
 
 { #category : #'as yet unclassified' }
 ArmorCodeTenant >> getSubProducts [
 
-	request := (self createPathForRequest:
-		           '/user/sub-product/elastic')
-		           ? (#environmentName -> #STAGING) & (#pageSize -> 20)
-		           & (#pageNumber -> 0) & (#tags -> #'')
-		           & (#sortBy -> #NAME) & (#direction -> #ASC).
-	^ self get
+ ^ connection get: '/user/sub-product/elastic' asZnUrl 
+	           ? (#environmentName -> #STAGING) & (#pageSize -> 20)
+	           & (#pageNumber -> 0) & (#tags -> #'') & (#sortBy -> #NAME)
+	           & (#direction -> #ASC)
 ]
 
 { #category : #'as yet unclassified' }
 ArmorCodeTenant >> getTeams [
 
-	request := self createPathForRequest: '/api/team/all-teams'.
-	^ self get
+	^ connection get: '/api/team/all-teams' asZnUrl 
+	
 ]
 
 { #category : #'as yet unclassified' }
 ArmorCodeTenant >> getUsers [
 
-	request := self createPathForRequest: '/user/data/users'.
-	^ self get
+	^ connection get: '/user/data/users' asZnUrl
+	
 ]
 
 { #category : #initialization }
 ArmorCodeTenant >> initialize [
 
-	connection := ACConnection new.
-	connection authenticateUsing: apiKey
-]
-
-{ #category : #'as yet unclassified' }
-ArmorCodeTenant >> post [
-
-	^ connection
-		  url: request;
-		  method: #POST;
-		  executeRequest
-]
-
-{ #category : #'as yet unclassified' }
-ArmorCodeTenant >> put [
-
-	^ connection
-		  url: request;
-		  method: #PUT;
-		  executeRequest
+	connection := ACConnection for: self
 ]
 
 { #category : #accessing }
 ArmorCodeTenant >> url [
-	^ saasUrl
+	^ url
 ]
 
 { #category : #accessing }
 ArmorCodeTenant >> url: aUrl [
 
-	saasUrl := aUrl
+	url := aUrl
 ]
