@@ -21,7 +21,7 @@ ACAuditScripts >> getLogins [
 
 	<script: 'self new getLogins'>
 	| logins |
-	logins := tenant getAuditLogs content collect: [ :entry | 
+	logins := tenant getLogins content collect: [ :entry | 
 		          String streamContents: [ :s | 
 			          s << entry message << ' at '
 			          << (self convertToTimeString: entry createdAt)

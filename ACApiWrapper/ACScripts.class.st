@@ -7,7 +7,7 @@ Class {
 	#category : #'ACApiWrapper-Scripts'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #helper }
 ACScripts >> convertToTimeString: aUnixTimeMilliSeconds [
 
 	aUnixTimeMilliSeconds

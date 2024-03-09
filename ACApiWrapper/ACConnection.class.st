@@ -15,14 +15,14 @@ ACConnection class >> for: aTenant [
 	^ self new tenant: aTenant
 ]
 
-{ #category : #operations }
+{ #category : #initialization }
 ACConnection >> apiLimitDelay [
 
 	"retry wait time for HTTP 429, api rate limit (in seconds)"
 	^ 64
 ]
 
-{ #category : #operations }
+{ #category : #initialization }
 ACConnection >> authenticateUsing: anApiKey [
 
 	connection setBearerAuthentication:
@@ -41,17 +41,17 @@ ACConnection >> connection [
 	^ connection
 ]
 
-{ #category : #'submorphs - add/remove' }
+{ #category : #operations }
 ACConnection >> delete: aUrl [
 
 	self authenticateUsing: tenant apiKey.
 	^ connection
-		  url: self basePath / request;
+		  url: self basePath + aUrl;
 		  method: #DELETE;
 		  executeRequest
 ]
 
-{ #category : #operations }
+{ #category : #accessing }
 ACConnection >> executeRequest [
 
 	UIManager default informUserDuring: [ :bar |
@@ -76,9 +76,20 @@ ACConnection >> get: aUrl [
 
 	self authenticateUsing: tenant apiKey.
 	connection
-		  url: self basePath / aUrl;
-		  method: #GET.
-		  ^ self executeRequest
+		url: self basePath + aUrl;
+		method: #GET.
+	^ self executeRequest
+]
+
+{ #category : #operations }
+ACConnection >> get: aUrl withQuery: aDictionary [
+
+	self authenticateUsing: tenant apiKey.
+	connection
+		url: self basePath + aUrl;
+		queryAddAll: aDictionary asDictionary;
+		method: #GET.
+	^ self executeRequest
 ]
 
 { #category : #initialization }
@@ -96,9 +107,10 @@ ACConnection >> initialize [
 
 { #category : #operations }
 ACConnection >> post: aUrl withPayload: aPayload [
+
 	self authenticateUsing: tenant apiKey.
 	connection
-		url: self basePath / aUrl;
+		url: self basePath + aUrl;
 		contents: aPayload;
 		method: #POST.
 	^ self executeRequest
@@ -109,13 +121,13 @@ ACConnection >> put: aUrl withPayload: aPayload [
 
 	self authenticateUsing: tenant apiKey.
 	connection
-		url: self basePath / aUrl;
+		url: self basePath + aUrl;
 		contents: aPayload;
 		method: #PUT.
 	^ self executeRequest
 ]
 
-{ #category : #operations }
+{ #category : #initialization }
 ACConnection >> recoverFromApiLimit [
 
 	1 to: self apiLimitDelay do: [ :each |

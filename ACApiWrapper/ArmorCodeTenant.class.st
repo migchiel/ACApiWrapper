@@ -50,88 +50,98 @@ ArmorCodeTenant >> apiKey: anApiKey [
 	apiKey := anApiKey 
 ]
 
+{ #category : #'API - Product' }
+ArmorCodeTenant >> createProducts: aProductOrCollection [
+
+	| products |
+	aProductOrCollection isCollection
+		ifTrue: [ products := aProductOrCollection ]
+		ifFalse: [ products := Array with: aProductOrCollection ].
+	^ products collect: [ :product | 
+		  connection post: '/user/product' withPayload: product ]
+]
+
 { #category : #'API - Audit & Alerts' }
 ArmorCodeTenant >> getAlerts [
 
-	^ connection get: '/api/alerts' asZnUrl.
-
+	^ connection get: '/api/alerts'
 ]
 
 { #category : #'API - Audit & Alerts' }
 ArmorCodeTenant >> getAuditLogs [
 
-	^ connection get: '/user/audit/log/details/page' asZnUrl 
-	           ? (#page -> 0) & (#size -> 10)
-	           & (#revisionType -> 'LOGGED_IN').
-
+	^ connection get:
+		  '/user/audit/log/details/page' withQuery: {#page -> 0 . #size -> 100}
 ]
 
 { #category : #'API - Misc' }
 ArmorCodeTenant >> getFeatureFlags [
 
-	^ connection get:  '/user/feature-flag' asZnUrl 
-
+	^ connection get: '/user/feature-flag'
 ]
 
 { #category : #'API - Findings' }
 ArmorCodeTenant >> getFindings [
 
-	^ connection post: '/user/findings/' asZnUrl withPayload: (NeoJSONObject fromString:
-			 '{"page":0,"size":100,"sort":"","sortColumns":[],"filters":{},"ticketStatusRequired":true,"ignoreMitigated":null,"ignoreDuplicate":true}')
+	^ connection
+		  post: '/user/findings/'
+		  withPayload: (NeoJSONObject fromString:
+				   '{"page":0,"size":100,"sort":"","sortColumns":[],"filters":{},"ticketStatusRequired":true,"ignoreMitigated":null,"ignoreDuplicate":true}')
+]
+
+{ #category : #'API - Audit & Alerts' }
+ArmorCodeTenant >> getLogins [
+
+	^ connection get: '/user/audit/log/details/page' withQuery: { 
+			  (#revisionType -> 'LOGGED_IN').
+			  (#page -> 0).
+			  (#size -> 10) }
 ]
 
 { #category : #'API - Product' }
 ArmorCodeTenant >> getProductTypes [
 
-	^ connection get: '/user/product-type' asZnUrl 
-
+	^ connection get: '/user/product-type'
 ]
 
 { #category : #'API - Product' }
 ArmorCodeTenant >> getProducts [
 
 	^ connection get:
-		  ('/user/product/elastic/paged' asZnUrl
-		  ? (#environmentName -> #STAGING) & (#pageSize -> 20)
-		  & (#pageNumber -> 0) & (#tags -> #'') & (#sortBy -> #NAME)
-		  & (#direction -> #ASC))
+		  '/user/product/elastic/paged' withQuery: { #environmentName -> #STAGING . #pageSize -> 20 . #pageNumber -> 0 . #tags -> #'' . #sortBy -> #NAME . #direction -> #ASC}
 ]
 
 { #category : #'API - Misc' }
 ArmorCodeTenant >> getSessionDetails [
 
-^ connection get: '/user/details/session' asZnUrl 
-
+	^ connection get: '/user/details/session' 
 ]
 
 { #category : #'API - Sub Product' }
 ArmorCodeTenant >> getSubProductTypes [
 
-	^ connection get: '/user/sub-product-type' asZnUrl.
-	
+	^ connection get: '/user/sub-product-type'
 ]
 
 { #category : #'API - Sub Product' }
 ArmorCodeTenant >> getSubProducts [
 
- ^ connection get: '/user/sub-product/elastic' asZnUrl 
-	           ? (#environmentName -> #STAGING) & (#pageSize -> 20)
-	           & (#pageNumber -> 0) & (#tags -> #'') & (#sortBy -> #NAME)
-	           & (#direction -> #ASC)
+	^ connection get:
+		  '/user/sub-product/elastic' withQuery: 
+		  { #environmentName -> #STAGING . #pageSize -> 20 .
+		  #pageNumber -> 0 . #tags -> #'' . #sortBy -> #NAME . #direction -> #ASC}
 ]
 
 { #category : #'API - Users & Teams' }
 ArmorCodeTenant >> getTeams [
 
-	^ connection get: '/api/team/all-teams' asZnUrl 
-	
+	^ connection get: '/api/team/all-teams'
 ]
 
 { #category : #'API - Users & Teams' }
 ArmorCodeTenant >> getUsers [
 
-	^ connection get: '/user/data/users' asZnUrl
-	
+	^ connection get: '/user/data/users'
 ]
 
 { #category : #initialization }

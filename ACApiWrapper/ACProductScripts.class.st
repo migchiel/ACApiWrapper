@@ -9,18 +9,16 @@ ACProductScripts >> createProducts [
 
 	<script: 'self new createProducts'>
 	| productTypes products |
-	productTypes := ProductTypeClient new read.
-	products := ProductClient new create: {
-			            (ACProduct new
+	productTypes := tenant getProductTypes.
+	products := tenant createProducts: { 
+			            (NeoJSONObject new
 				             name: 'Test-Product-1';
 				             description: 'Some description';
-				             type: productTypes atRandom;
-				             yourself).
-			            (ACProduct new
+				             type: productTypes atRandom).
+			            (NeoJSONObject new
 				             name: 'Test-Product-2';
 				             description: 'Some description';
-				             type: productTypes atRandom;
-				             yourself) }.
+				             type: productTypes atRandom) }.
 	ACApiItemView openWith: (products collect: #name)
 ]
 
