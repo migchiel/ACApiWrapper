@@ -15,21 +15,21 @@ ACConnection class >> for: aTenant [
 	^ self new tenant: aTenant
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 ACConnection >> apiLimitDelay [
 
 	"retry wait time for HTTP 429, api rate limit (in seconds)"
 	^ 64
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 ACConnection >> authenticateUsing: anApiKey [
 
 	connection setBearerAuthentication:
 		anApiKey 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 ACConnection >> basePath [
 
 	^ tenant url asZnUrl
@@ -51,7 +51,7 @@ ACConnection >> delete: aUrl [
 		  executeRequest
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 ACConnection >> executeRequest [
 
 	UIManager default informUserDuring: [ :bar |
@@ -94,7 +94,7 @@ ACConnection >> initialize [
 		              yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 ACConnection >> post: aUrl withPayload: aPayload [
 	self authenticateUsing: tenant apiKey.
 	connection
@@ -104,7 +104,7 @@ ACConnection >> post: aUrl withPayload: aPayload [
 	^ self executeRequest
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 ACConnection >> put: aUrl withPayload: aPayload [
 
 	self authenticateUsing: tenant apiKey.
@@ -115,7 +115,7 @@ ACConnection >> put: aUrl withPayload: aPayload [
 	^ self executeRequest
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 ACConnection >> recoverFromApiLimit [
 
 	1 to: self apiLimitDelay do: [ :each |
@@ -128,7 +128,7 @@ ACConnection >> recoverFromApiLimit [
 		(Delay forSeconds: 1) wait ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 ACConnection >> setupConnection [
 
 	connection := ZnClient new

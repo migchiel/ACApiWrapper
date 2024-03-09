@@ -50,32 +50,14 @@ ArmorCodeTenant >> apiKey: anApiKey [
 	apiKey := anApiKey 
 ]
 
-{ #category : #'as yet unclassified' }
-ArmorCodeTenant >> basePath [
-
-	^ ZnUrl fromString: url
-]
-
-{ #category : #accessing }
-ArmorCodeTenant >> body: aPayload [
-
-	connection body: aPayload 
-]
-
-{ #category : #'as yet unclassified' }
-ArmorCodeTenant >> createPathForRequest: anEndpoint [
-
-	^ request := self basePath + anEndpoint
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #'API - Audit & Alerts' }
 ArmorCodeTenant >> getAlerts [
 
 	^ connection get: '/api/alerts' asZnUrl.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'API - Audit & Alerts' }
 ArmorCodeTenant >> getAuditLogs [
 
 	^ connection get: '/user/audit/log/details/page' asZnUrl 
@@ -84,28 +66,28 @@ ArmorCodeTenant >> getAuditLogs [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'API - Misc' }
 ArmorCodeTenant >> getFeatureFlags [
 
 	^ connection get:  '/user/feature-flag' asZnUrl 
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'API - Findings' }
 ArmorCodeTenant >> getFindings [
 
 	^ connection post: '/user/findings/' asZnUrl withPayload: (NeoJSONObject fromString:
 			 '{"page":0,"size":100,"sort":"","sortColumns":[],"filters":{},"ticketStatusRequired":true,"ignoreMitigated":null,"ignoreDuplicate":true}')
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'API - Product' }
 ArmorCodeTenant >> getProductTypes [
 
 	^ connection get: '/user/product-type' asZnUrl 
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'API - Product' }
 ArmorCodeTenant >> getProducts [
 
 	^ connection get:
@@ -115,21 +97,21 @@ ArmorCodeTenant >> getProducts [
 		  & (#direction -> #ASC))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'API - Misc' }
 ArmorCodeTenant >> getSessionDetails [
 
 ^ connection get: '/user/details/session' asZnUrl 
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'API - Sub Product' }
 ArmorCodeTenant >> getSubProductTypes [
 
 	^ connection get: '/user/sub-product-type' asZnUrl.
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'API - Sub Product' }
 ArmorCodeTenant >> getSubProducts [
 
  ^ connection get: '/user/sub-product/elastic' asZnUrl 
@@ -138,14 +120,14 @@ ArmorCodeTenant >> getSubProducts [
 	           & (#direction -> #ASC)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'API - Users & Teams' }
 ArmorCodeTenant >> getTeams [
 
 	^ connection get: '/api/team/all-teams' asZnUrl 
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'API - Users & Teams' }
 ArmorCodeTenant >> getUsers [
 
 	^ connection get: '/user/data/users' asZnUrl
