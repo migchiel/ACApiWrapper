@@ -50,14 +50,25 @@ ArmorCodeTenant >> apiKey: anApiKey [
 	apiKey := anApiKey 
 ]
 
-{ #category : #'API - Product' }
-ArmorCodeTenant >> createProducts: aProductOrCollection [
+{ #category : #'API - Business Unit' }
+ArmorCodeTenant >> createBusinessUnit: aBusinessUnitOrCollection [
 
-	| products |
-	aProductOrCollection isCollection
-		ifTrue: [ products := aProductOrCollection ]
-		ifFalse: [ products := Array with: aProductOrCollection ].
-	^ products collect: [ :product | 
+	| businessUnits |
+	aBusinessUnitOrCollection isCollection
+		ifTrue: [ businessUnits := aBusinessUnitOrCollection ]
+		ifFalse: [ businessUnits := Array with: aBusinessUnitOrCollection ].
+	^ businessUnits collect: [ :businessUnit | 
+		  connection post: '/user/business-unit' withPayload: businessUnit ]
+]
+
+{ #category : #'API - Product' }
+ArmorCodeTenant >> createProducts: aBusinessUnitOrCollection [
+
+	| businessUnit |
+	aBusinessUnitOrCollection isCollection
+		ifTrue: [ businessUnit := aBusinessUnitOrCollection ]
+		ifFalse: [ businessUnit := Array with: aBusinessUnitOrCollection ].
+	^ businessUnit collect: [ :product | 
 		  connection post: '/user/product' withPayload: product ]
 ]
 
@@ -79,10 +90,40 @@ ArmorCodeTenant >> getAlerts [
 ]
 
 { #category : #'API - Audit & Alerts' }
+ArmorCodeTenant >> getAlertsFilters [
+
+	^ connection get: '/api/alerts/alert-filters'
+]
+
+{ #category : #'API - Audit & Alerts' }
+ArmorCodeTenant >> getAlertsNotificationStatistics [
+
+	^ connection get: '/api/alerts/alert-notification-stats'
+]
+
+{ #category : #'API - Audit & Alerts' }
+ArmorCodeTenant >> getAlertsStatistics [
+
+	^ connection get: '/api/alerts/alert-stats'
+]
+
+{ #category : #'API - Audit & Alerts' }
 ArmorCodeTenant >> getAuditLogs [
 
 	^ connection get:
 		  '/user/audit/log/details/page' withQuery: {#page -> 0 . #size -> 100}
+]
+
+{ #category : #'API - Audit & Alerts' }
+ArmorCodeTenant >> getAuditLogsFilter [
+
+	^ connection get: '/user/audit/log/filters' 
+]
+
+{ #category : #'API - Business Unit' }
+ArmorCodeTenant >> getBusinessUnits [
+
+	^ connection get: '/user/business-units/'
 ]
 
 { #category : #'API - Misc' }
@@ -128,6 +169,19 @@ ArmorCodeTenant >> getProducts [
 		^ connection get: '/user/product' 
 ]
 
+{ #category : #'API - Product' }
+ArmorCodeTenant >> getProductsElastic [
+
+	^ connection get: '/user/product/elastic/paged' withQuery: { 
+			  (#environmentName -> #STAGING).
+			  (#pageSize -> 20).
+			  (#pageNumber -> 0).
+			  (#tags -> #'').
+			  (#sortBy -> #NAME).
+			  (#direction -> #ASC) }
+
+]
+
 { #category : #'API - Misc' }
 ArmorCodeTenant >> getSessionDetails [
 
@@ -143,10 +197,19 @@ ArmorCodeTenant >> getSubProductTypes [
 { #category : #'API - Sub Product' }
 ArmorCodeTenant >> getSubProducts [
 
-	^ connection get:
-		  '/user/sub-product/elastic' withQuery: 
-		  { #environmentName -> #STAGING . #pageSize -> 20 .
-		  #pageNumber -> 0 . #tags -> #'' . #sortBy -> #NAME . #direction -> #ASC}
+	^ connection get: '/user/sub-product'
+]
+
+{ #category : #'API - Sub Product' }
+ArmorCodeTenant >> getSubProductsElastic [
+
+	^ connection get: '/user/sub-product/elastic' withQuery: { 
+			  (#environmentName -> #STAGING).
+			  (#pageSize -> 20).
+			  (#pageNumber -> 0).
+			  (#tags -> #'').
+			  (#sortBy -> #NAME).
+			  (#direction -> #ASC) }
 ]
 
 { #category : #'API - Users & Teams' }
@@ -165,6 +228,17 @@ ArmorCodeTenant >> getUsers [
 ArmorCodeTenant >> initialize [
 
 	connection := ACConnection for: self
+]
+
+{ #category : #'API - Business Unit' }
+ArmorCodeTenant >> updateBusinessUnits: aBusinessUnitOrCollection [
+
+	| businessUnits |
+	aBusinessUnitOrCollection isCollection
+		ifTrue: [ businessUnits := aBusinessUnitOrCollection ]
+		ifFalse: [ businessUnits := Array with: aBusinessUnitOrCollection ].
+	^ businessUnits collect: [ :businessUnit | 
+		  connection put: '/user/product' withPayload: businessUnit ]
 ]
 
 { #category : #'API - Product' }
