@@ -69,7 +69,7 @@ ArmorCodeTenant >> deleteProducts: aProductOrCollection [
 		ifTrue: [ products := aProductOrCollection ]
 		ifFalse: [ products := Array with: aProductOrCollection ].
 	^ products collect: [ :product | 
-		  connection delete: '/user/product/', product id ]
+		  connection delete: '/user/product/' , product id asString ]
 ]
 
 { #category : #'API - Audit & Alerts' }
@@ -118,8 +118,14 @@ ArmorCodeTenant >> getProductTypes [
 { #category : #'API - Product' }
 ArmorCodeTenant >> getProducts [
 
-	^ connection get:
-		  '/user/product/elastic/paged' withQuery: { #environmentName -> #STAGING . #pageSize -> 20 . #pageNumber -> 0 . #tags -> #'' . #sortBy -> #NAME . #direction -> #ASC}
+"	^ connection get: '/user/product/elastic/paged' withQuery: { 
+			  (#environmentName -> #STAGING).
+			  (#pageSize -> 20).
+			  (#pageNumber -> 0).
+			  (#tags -> #'').
+			  (#sortBy -> #NAME).
+			  (#direction -> #ASC) }"
+		^ connection get: '/user/product' 
 ]
 
 { #category : #'API - Misc' }

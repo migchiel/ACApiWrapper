@@ -45,10 +45,10 @@ ACConnection >> connection [
 ACConnection >> delete: aUrl [
 
 	self authenticateUsing: tenant apiKey.
-	 connection
-		  url: self basePath + aUrl;
-		  method: #DELETE.
-		  ^ self executeRequest
+	connection
+		url: self basePath + aUrl;
+		method: #DELETE.
+	^ self executeRequest
 ]
 
 { #category : #accessing }
@@ -127,7 +127,6 @@ ACConnection >> put: aUrl withPayload: aPayload [
 		contents: aPayload;
 		forJsonREST;
 		method: #PUT.
-	connection inspect.
 	^ self executeRequest
 ]
 
