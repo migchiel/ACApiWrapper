@@ -61,6 +61,17 @@ ArmorCodeTenant >> createProducts: aProductOrCollection [
 		  connection post: '/user/product' withPayload: product ]
 ]
 
+{ #category : #'API - Product' }
+ArmorCodeTenant >> deleteProducts: aProductOrCollection [
+
+	| products |
+	aProductOrCollection isCollection
+		ifTrue: [ products := aProductOrCollection ]
+		ifFalse: [ products := Array with: aProductOrCollection ].
+	^ products collect: [ :product | 
+		  connection delete: '/user/product/', product id ]
+]
+
 { #category : #'API - Audit & Alerts' }
 ArmorCodeTenant >> getAlerts [
 
@@ -148,6 +159,17 @@ ArmorCodeTenant >> getUsers [
 ArmorCodeTenant >> initialize [
 
 	connection := ACConnection for: self
+]
+
+{ #category : #'API - Product' }
+ArmorCodeTenant >> updateProducts: aProductOrCollection [
+
+	| products |
+	aProductOrCollection isCollection
+		ifTrue: [ products := aProductOrCollection ]
+		ifFalse: [ products := Array with: aProductOrCollection ].
+	^ products collect: [ :product | 
+		  connection put: '/user/product' withPayload: product ]
 ]
 
 { #category : #accessing }

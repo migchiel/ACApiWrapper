@@ -26,7 +26,7 @@ ACProductScripts >> createProducts [
 ACProductScripts >> deleteProducts [
 
 	<script: 'self new deleteProducts'>
-	ProductClient new delete: (ProductClient new read collect: #id)
+	tenant deleteProducts: tenant getProducts content
 ]
 
 { #category : #'as yet unclassified' }
@@ -48,12 +48,12 @@ ACProductScripts >> getProducts [
 ACProductScripts >> updateProducts [
 
 	<script: 'self new updateProducts'>
-	| products client |
-	client := ProductClient new.
-	products := client read.
-	products := client update: (products collect: [ :p |
-			             p
-				             name: p name , '-updated';
-				             yourself ]).
-	ACApiItemView openWith: (products collect: #name)
+	| products |
+	products := tenant getProducts content.
+	products := products collect: [ :p | 
+		            p
+			            name: p name , '-updated';
+			            yourself ].
+	products := tenant updateProducts: products.
+	ACApiItemView openWith: (products content collect: #name)
 ]

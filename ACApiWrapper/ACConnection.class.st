@@ -45,10 +45,10 @@ ACConnection >> connection [
 ACConnection >> delete: aUrl [
 
 	self authenticateUsing: tenant apiKey.
-	^ connection
+	 connection
 		  url: self basePath + aUrl;
-		  method: #DELETE;
-		  executeRequest
+		  method: #DELETE.
+		  ^ self executeRequest
 ]
 
 { #category : #accessing }
@@ -77,6 +77,7 @@ ACConnection >> get: aUrl [
 	self authenticateUsing: tenant apiKey.
 	connection
 		url: self basePath + aUrl;
+		forJsonREST;
 		method: #GET.
 	^ self executeRequest
 ]
@@ -88,6 +89,7 @@ ACConnection >> get: aUrl withQuery: aDictionary [
 	connection
 		url: self basePath + aUrl;
 		queryAddAll: aDictionary asDictionary;
+		forJsonREST;
 		method: #GET.
 	^ self executeRequest
 ]
@@ -97,7 +99,6 @@ ACConnection >> initialize [
 
 	connection := ZnClient new
 		              systemPolicy;
-											forJsonREST;
 		              logLevel: 3;
 		              signalProgress: false;
 		              autoResetEntityMethods: #( HEAD DELETE GET );
@@ -112,6 +113,7 @@ ACConnection >> post: aUrl withPayload: aPayload [
 	connection
 		url: self basePath + aUrl;
 		contents: aPayload;
+		forJsonREST;
 		method: #POST.
 	^ self executeRequest
 ]
@@ -123,7 +125,9 @@ ACConnection >> put: aUrl withPayload: aPayload [
 	connection
 		url: self basePath + aUrl;
 		contents: aPayload;
+		forJsonREST;
 		method: #PUT.
+	connection inspect.
 	^ self executeRequest
 ]
 
