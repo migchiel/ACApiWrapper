@@ -8,5 +8,5 @@ Class {
 ACUserScripts >> getUsers [
 
 	<script: 'self new getUsers'>
-	ACApiItemView openWith: (UserClient new read collect: #name)
+	ACApiItemView openWith: (tenant getUsers collect: #name)
 ]

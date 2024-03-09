@@ -8,12 +8,13 @@ Class {
 ACSubProductScripts >> getSubProductTypes [
 
 	<script: 'self new getSubProductTypes'>
-	ACApiItemView openWith: (SubProductTypeClient new read collect: #name)
+	ACApiItemView openWith:
+		(tenant getSubProductTypes collect: #name)
 ]
 
 { #category : #'as yet unclassified' }
 ACSubProductScripts >> getSubProducts [
 
 	<script: 'self new getSubProducts'>
-	ACApiItemView openWith: (SubProductClient new read collect: #name)
+	ACApiItemView openWith: (tenant getSubProducts content collect: #name)
 ]

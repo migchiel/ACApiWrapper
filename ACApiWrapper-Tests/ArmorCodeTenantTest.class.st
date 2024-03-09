@@ -9,8 +9,11 @@ Class {
 
 { #category : #tests }
 ArmorCodeTenantTest >> testCreateUsingNew [
+	| tenant |
 
-	self should: [ ArmorCodeTenant new ] raise: Error
+	tenant := ArmorCodeTenant new.
+	self assert: tenant url equals: ArmorCodeTenant defaultTenant.
+	self assert: tenant apiKey equals: (Smalltalk os environment at: 'acapi_token')
 ]
 
 { #category : #tests }

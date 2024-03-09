@@ -7,8 +7,18 @@ Class {
 	#category : #'ACApiWrapper-Scripts'
 }
 
-{ #category : #initialization }
-ACScripts >> initialize [ 
+{ #category : #'as yet unclassified' }
+ACScripts >> convertToTimeString: aUnixTimeMilliSeconds [
 
+	aUnixTimeMilliSeconds
+		ifNotNil: [ 
+		^ (ZTimestamp fromUnixTime: aUnixTimeMilliSeconds / 1000) asString ]
+		ifNil: [ ^ 'null' ]
+]
+
+{ #category : #initialization }
+ACScripts >> initialize [
+
+	tenant := ArmorCodeTenant new.
 	
 ]

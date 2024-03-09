@@ -9,8 +9,9 @@ ACSessionScripts >> getSessionDetails [
 
 	<script: 'self new getSessionDetails'>
 	| sessionDetails |
-	sessionDetails := SessionClient new read.
-	ACApiItemView openWith: {
-			'Organisation   : ', sessionDetails currentOrgSessionDto name.
-			'Organisation ID: ', sessionDetails currentOrgSessionDto id asString }
+	sessionDetails := tenant getSessionDetails.
+	ACApiItemView openWith: { 
+			('Organisation   : ' , sessionDetails currentOrgSessionDto name).
+			('Organisation ID: '
+			 , sessionDetails currentOrgSessionDto id asString) }
 ]

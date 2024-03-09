@@ -35,14 +35,15 @@ ACProductScripts >> deleteProducts [
 ACProductScripts >> getProductTypes [
 
 	<script: 'self new getProductTypes'>
-	ACApiItemView openWith: (ProductTypeClient new read collect: #name)
+	ACApiItemView openWith:
+		(tenant getProductTypes collect: #name)
 ]
 
 { #category : #'as yet unclassified' }
 ACProductScripts >> getProducts [
 
 	<script: 'self new getProducts'>
-	ACApiItemView openWith: (ProductClient new read collect: #name)
+	ACApiItemView openWith: (tenant getProducts content collect: #name)
 ]
 
 { #category : #'as yet unclassified' }

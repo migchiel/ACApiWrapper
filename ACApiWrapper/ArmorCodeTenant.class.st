@@ -134,6 +134,13 @@ ArmorCodeTenant >> getProducts [
 ]
 
 { #category : #'as yet unclassified' }
+ArmorCodeTenant >> getSessionDetails [
+
+	request := self createPathForRequest: '/user/details/session'.
+	^ self get
+]
+
+{ #category : #'as yet unclassified' }
 ArmorCodeTenant >> getSubProductTypes [
 
 	request := self createPathForRequest: '/user/sub-product-type'.
@@ -148,6 +155,20 @@ ArmorCodeTenant >> getSubProducts [
 		           ? (#environmentName -> #STAGING) & (#pageSize -> 20)
 		           & (#pageNumber -> 0) & (#tags -> #'')
 		           & (#sortBy -> #NAME) & (#direction -> #ASC).
+	^ self get
+]
+
+{ #category : #'as yet unclassified' }
+ArmorCodeTenant >> getTeams [
+
+	request := self createPathForRequest: '/api/team/all-teams'.
+	^ self get
+]
+
+{ #category : #'as yet unclassified' }
+ArmorCodeTenant >> getUsers [
+
+	request := self createPathForRequest: '/user/data/users'.
 	^ self get
 ]
 
