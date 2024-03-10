@@ -62,13 +62,11 @@ ArmorCodeTenant >> createBusinessUnit: aBusinessUnitOrCollection [
 ]
 
 { #category : #'API - Product' }
-ArmorCodeTenant >> createProducts: aBusinessUnitOrCollection [
+ArmorCodeTenant >> createProducts: aProductOrCollection [
 
-	| businessUnit |
-	aBusinessUnitOrCollection isCollection
-		ifTrue: [ businessUnit := aBusinessUnitOrCollection ]
-		ifFalse: [ businessUnit := Array with: aBusinessUnitOrCollection ].
-	^ businessUnit collect: [ :product | 
+	| products |
+	products := self ensureCollection: aProductOrCollection.
+	^ products collect: [ :product | 
 		  connection post: '/user/product' withPayload: product ]
 ]
 
@@ -76,11 +74,17 @@ ArmorCodeTenant >> createProducts: aBusinessUnitOrCollection [
 ArmorCodeTenant >> deleteProducts: aProductOrCollection [
 
 	| products |
-	aProductOrCollection isCollection
-		ifTrue: [ products := aProductOrCollection ]
-		ifFalse: [ products := Array with: aProductOrCollection ].
+	products := self ensureCollection: aProductOrCollection.
 	^ products collect: [ :product | 
 		  connection delete: '/user/product/' , product id asString ]
+]
+
+{ #category : #validating }
+ArmorCodeTenant >> ensureCollection: anItemOrItemCollection [
+
+	^ anItemOrItemCollection  isCollection
+		                ifTrue: [ anItemOrItemCollection  ]
+		                ifFalse: [ anItemOrItemCollection  asArray ].
 ]
 
 { #category : #'API - Audit & Alerts' }
@@ -159,14 +163,16 @@ ArmorCodeTenant >> getProductTypes [
 { #category : #'API - Product' }
 ArmorCodeTenant >> getProducts [
 
-"	^ connection get: '/user/product/elastic/paged' withQuery: { 
-			  (#environmentName -> #STAGING).
-			  (#pageSize -> 20).
-			  (#pageNumber -> 0).
-			  (#tags -> #'').
-			  (#sortBy -> #NAME).
-			  (#direction -> #ASC) }"
-		^ connection get: '/user/product' 
+	^ connection get: '/user/product'
+]
+
+{ #category : #'API - Product' }
+ArmorCodeTenant >> getProductsAll [
+
+	^ connection get: '/user/product/all' withQuery: { 
+			  (#page -> 0).
+			  (#size -> 2000).
+			  (#sort -> #NAME) }
 ]
 
 { #category : #'API - Product' }
@@ -234,9 +240,7 @@ ArmorCodeTenant >> initialize [
 ArmorCodeTenant >> updateBusinessUnits: aBusinessUnitOrCollection [
 
 	| businessUnits |
-	aBusinessUnitOrCollection isCollection
-		ifTrue: [ businessUnits := aBusinessUnitOrCollection ]
-		ifFalse: [ businessUnits := Array with: aBusinessUnitOrCollection ].
+	businessUnits := self ensureCollection: aBusinessUnitOrCollection.
 	^ businessUnits collect: [ :businessUnit | 
 		  connection put: '/user/product' withPayload: businessUnit ]
 ]
@@ -245,9 +249,7 @@ ArmorCodeTenant >> updateBusinessUnits: aBusinessUnitOrCollection [
 ArmorCodeTenant >> updateProducts: aProductOrCollection [
 
 	| products |
-	aProductOrCollection isCollection
-		ifTrue: [ products := aProductOrCollection ]
-		ifFalse: [ products := Array with: aProductOrCollection ].
+	products := self ensureCollection: aProductOrCollection.
 	^ products collect: [ :product | 
 		  connection put: '/user/product' withPayload: product ]
 ]
