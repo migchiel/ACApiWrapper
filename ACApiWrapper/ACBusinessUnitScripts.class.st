@@ -4,7 +4,7 @@ Class {
 	#category : #'ACApiWrapper-Scripts'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #scripting }
 ACBusinessUnitScripts >> getBusinessUnits [
 
 	<script: 'self new getBusinessUnits'>

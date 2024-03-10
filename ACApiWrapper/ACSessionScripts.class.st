@@ -4,7 +4,7 @@ Class {
 	#category : #'ACApiWrapper-Scripts'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #scripting }
 ACSessionScripts >> getSessionDetails [
 
 	<script: 'self new getSessionDetails'>

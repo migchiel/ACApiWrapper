@@ -4,7 +4,7 @@ Class {
 	#category : #'ACApiWrapper-Scripts'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #scripting }
 ACAuditScripts >> getAlerts [
 
 	<script: 'self new getAlerts'>
@@ -16,7 +16,7 @@ ACAuditScripts >> getAlerts [
 	ACApiItemView openWith: alerts
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #scripting }
 ACAuditScripts >> getLogins [
 
 	<script: 'self new getLogins'>

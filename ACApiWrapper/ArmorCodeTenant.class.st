@@ -61,22 +61,34 @@ ArmorCodeTenant >> createBusinessUnit: aBusinessUnitOrCollection [
 		  connection post: '/user/business-unit' withPayload: businessUnit ]
 ]
 
+{ #category : #accessing }
+ArmorCodeTenant >> createItems: aUrl items: anItemOrItemCollection [
+
+	| items |
+	items := self ensureCollection: anItemOrItemCollection.
+	^ items collect: [ :item | connection post: aUrl withPayload: item ]
+]
+
 { #category : #'API - Product' }
 ArmorCodeTenant >> createProducts: aProductOrCollection [
 
-	| products |
-	products := self ensureCollection: aProductOrCollection.
-	^ products collect: [ :product | 
-		  connection post: '/user/product' withPayload: product ]
+	^ self createItems: '/user/product' items: aProductOrCollection
+]
+
+{ #category : #accessing }
+ArmorCodeTenant >> deleteItems: aUrl items: anItemOrItemCollection [
+
+	| items |
+	items := self ensureCollection: anItemOrItemCollection.
+	^ items collect: [ :item | 
+		  connection delete: aUrl , item id asString ]
 ]
 
 { #category : #'API - Product' }
 ArmorCodeTenant >> deleteProducts: aProductOrCollection [
 
-	| products |
-	products := self ensureCollection: aProductOrCollection.
-	^ products collect: [ :product | 
-		  connection delete: '/user/product/' , product id asString ]
+	^ self deleteItems: '/user/product/' items: aProductOrCollection  
+		  
 ]
 
 { #category : #validating }
@@ -243,6 +255,15 @@ ArmorCodeTenant >> updateBusinessUnits: aBusinessUnitOrCollection [
 	businessUnits := self ensureCollection: aBusinessUnitOrCollection.
 	^ businessUnits collect: [ :businessUnit | 
 		  connection put: '/user/product' withPayload: businessUnit ]
+]
+
+{ #category : #accessing }
+ArmorCodeTenant >> updateItems: aUrl items: anItemOrItemCollection [
+
+	| items |
+	items := self ensureCollection: anItemOrItemCollection.
+	^ items collect: [ :item | 
+		  connection put: aUrl withPayload: item ]
 ]
 
 { #category : #'API - Product' }

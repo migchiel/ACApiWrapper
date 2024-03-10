@@ -4,7 +4,7 @@ Class {
 	#category : #'ACApiWrapper-Scripts'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #scripting }
 ACSubProductScripts >> getSubProductTypes [
 
 	<script: 'self new getSubProductTypes'>
@@ -12,7 +12,7 @@ ACSubProductScripts >> getSubProductTypes [
 		(tenant getSubProductTypes collect: #name)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #scripting }
 ACSubProductScripts >> getSubProducts [
 
 	<script: 'self new getSubProducts'>

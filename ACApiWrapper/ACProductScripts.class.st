@@ -4,7 +4,7 @@ Class {
 	#category : #'ACApiWrapper-Scripts'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #scripting }
 ACProductScripts >> createProducts [
 
 	<script: 'self new createProducts'>
@@ -22,14 +22,14 @@ ACProductScripts >> createProducts [
 	ACApiItemView openWith: (products collect: #name)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #scripting }
 ACProductScripts >> deleteProducts [
 
 	<script: 'self new deleteProducts'>
 	ACApiItemView openWith: (tenant deleteProducts: tenant getProducts)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #scripting }
 ACProductScripts >> getProductTypes [
 
 	<script: 'self new getProductTypes'>
@@ -37,14 +37,14 @@ ACProductScripts >> getProductTypes [
 		(tenant getProductTypes collect: #name)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #scripting }
 ACProductScripts >> getProducts [
 
 	<script: 'self new getProducts'>
 	ACApiItemView openWith: (tenant getProducts collect: #name)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #scripting }
 ACProductScripts >> updateProducts [
 
 	<script: 'self new updateProducts'>
