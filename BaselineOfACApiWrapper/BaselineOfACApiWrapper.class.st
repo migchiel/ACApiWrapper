@@ -27,5 +27,6 @@ BaselineOfACApiWrapper >> setUpDependencies: spec [
 		baseline: 'NeoJSON'
 		with: [ spec repository: 'github://svenvc/NeoJSON/repository' ];
 		baseline: 'ZTimestamp'
-		with: [ spec repository: 'github://svenvc/ztimestamp' ]
+		with: [ spec repository: 'github://svenvc/ztimestamp' ];
+		baseline: 'NeoCSV' with: [ spec repository: 'github://svenvc/NeoCSV/repository' ].
 ]
