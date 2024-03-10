@@ -200,12 +200,11 @@ ArmorCodeTenant >> getProductsElastic [
 
 	^ connection get: '/user/product/elastic/paged' withQuery: { 
 			  (#environmentName -> #STAGING).
-			  (#pageSize -> 20).
+			  (#pageSize -> 100).
 			  (#pageNumber -> 0).
 			  (#tags -> #'').
 			  (#sortBy -> #NAME).
 			  (#direction -> #ASC) }
-
 ]
 
 { #category : #'API - Misc' }
@@ -275,10 +274,8 @@ ArmorCodeTenant >> updateItems: aUrl items: anItemOrItemCollection [
 { #category : #'API - Product' }
 ArmorCodeTenant >> updateProducts: aProductOrCollection [
 
-	| products |
-	products := self ensureCollection: aProductOrCollection.
-	^ products collect: [ :product | 
-		  connection put: '/user/product' withPayload: product ]
+
+	^ self updateItems:  '/user/product' items: aProductOrCollection 
 ]
 
 { #category : #'API - Sub Product' }
