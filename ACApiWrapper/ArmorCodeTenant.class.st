@@ -53,12 +53,8 @@ ArmorCodeTenant >> apiKey: anApiKey [
 { #category : #'API - Business Unit' }
 ArmorCodeTenant >> createBusinessUnit: aBusinessUnitOrCollection [
 
-	| businessUnits |
-	aBusinessUnitOrCollection isCollection
-		ifTrue: [ businessUnits := aBusinessUnitOrCollection ]
-		ifFalse: [ businessUnits := Array with: aBusinessUnitOrCollection ].
-	^ businessUnits collect: [ :businessUnit | 
-		  connection post: '/user/business-unit' withPayload: businessUnit ]
+	^ self createItems: '/user/business-unit' items: aBusinessUnitOrCollection 
+	
 ]
 
 { #category : #accessing }
@@ -75,6 +71,12 @@ ArmorCodeTenant >> createProducts: aProductOrCollection [
 	^ self createItems: '/user/product' items: aProductOrCollection
 ]
 
+{ #category : #'API - Sub Product' }
+ArmorCodeTenant >> createSubProducts: anItemOrCollection [
+
+	^ self createItems: '/user/sub-product' items: anItemOrCollection 
+]
+
 { #category : #accessing }
 ArmorCodeTenant >> deleteItems: aUrl items: anItemOrItemCollection [
 
@@ -89,6 +91,12 @@ ArmorCodeTenant >> deleteProducts: aProductOrCollection [
 
 	^ self deleteItems: '/user/product/' items: aProductOrCollection  
 		  
+]
+
+{ #category : #'API - Sub Product' }
+ArmorCodeTenant >> deleteSubProducts: anItemOrCollection [
+
+	^ self deleteItems: '/user/sub-product/' items: anItemOrCollection 
 ]
 
 { #category : #validating }
@@ -251,10 +259,8 @@ ArmorCodeTenant >> initialize [
 { #category : #'API - Business Unit' }
 ArmorCodeTenant >> updateBusinessUnits: aBusinessUnitOrCollection [
 
-	| businessUnits |
-	businessUnits := self ensureCollection: aBusinessUnitOrCollection.
-	^ businessUnits collect: [ :businessUnit | 
-		  connection put: '/user/product' withPayload: businessUnit ]
+	^ self updateItems: '/user/product' items: aBusinessUnitOrCollection 
+	
 ]
 
 { #category : #accessing }
@@ -273,6 +279,13 @@ ArmorCodeTenant >> updateProducts: aProductOrCollection [
 	products := self ensureCollection: aProductOrCollection.
 	^ products collect: [ :product | 
 		  connection put: '/user/product' withPayload: product ]
+]
+
+{ #category : #'API - Sub Product' }
+ArmorCodeTenant >> updateSubProducts: anItemOrCollection [
+
+	^ self updateItems: '/user/sub-product' items: anItemOrCollection  
+	
 ]
 
 { #category : #accessing }
