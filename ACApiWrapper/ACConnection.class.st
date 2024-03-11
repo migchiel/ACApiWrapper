@@ -106,28 +106,30 @@ ACConnection >> initialize [
 		              yourself
 ]
 
-{ #category : #operations }
-ACConnection >> post: aUrl withPayload: aPayload [
+{ #category : #'as yet unclassified' }
+ACConnection >> performForUrl: aUrl withPayload: aPayload [
 
-	self authenticateUsing: tenant apiKey.
+self authenticateUsing: tenant apiKey.
 	connection
 		url: self basePath + aUrl;
 		contents: aPayload;
-		forJsonREST;
-		method: #POST.
+		forJsonREST.
 	^ self executeRequest
+]
+
+{ #category : #operations }
+ACConnection >> post: aUrl withPayload: aPayload [
+
+	connection method: #POST.
+	^ self performForUrl: aUrl withPayload: aPayload
+	
 ]
 
 { #category : #operations }
 ACConnection >> put: aUrl withPayload: aPayload [
 
-	self authenticateUsing: tenant apiKey.
-	connection
-		url: self basePath + aUrl;
-		contents: aPayload;
-		forJsonREST;
-		method: #PUT.
-	^ self executeRequest
+	connection method: #PUT.
+	^ self performForUrl: aUrl withPayload: aPayload 
 ]
 
 { #category : #initialization }
