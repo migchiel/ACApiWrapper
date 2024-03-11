@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'tenant',
 		'connection',
-		'request'
+		'request',
+		'showProgress'
 	],
 	#category : #'ACApiWrapper-Core'
 }
@@ -35,37 +36,29 @@ ACConnection >> basePath [
 	^ tenant url asZnUrl
 ]
 
-{ #category : #accessing }
-ACConnection >> connection [
-
-	^ connection
-]
-
 { #category : #operations }
 ACConnection >> delete: aUrl [
 
-	self authenticateUsing: tenant apiKey.
-	connection
-		url: self basePath + aUrl;
-		method: #DELETE.
+	self setUrl: aUrl. connection method: #DELETE.
 	^ self executeRequest
 ]
 
 { #category : #accessing }
 ACConnection >> executeRequest [
 
-	UIManager default informUserDuring: [ :bar |
+	self authenticateUsing: tenant apiKey.
+	UIManager default informUserDuring: [ :bar | 
 		bar label: 'Performing API call...'.
-		[
+		[ 
 		^ connection
-			  ifFail: [ :exception |
-				  ((exception isKindOf: ZnHttpUnsuccessful) and: [
-						   #( 429 ) includes: exception response code ]) ifTrue: [
+			  ifFail: [ :exception | 
+				  ((exception isKindOf: ZnHttpUnsuccessful) and: [ 
+						   #( 429 ) includes: exception response code ]) ifTrue: [ 
 						  self recoverFromApiLimit.
 						  exception signaler execute ] ];
 			  execute ]
 			on: HTTPProgress
-			do: [ :progress |
+			do: [ :progress | 
 				bar label: progress printString.
 				progress isEmpty ifFalse: [ bar current: progress percentage ].
 				progress resume ] ]
@@ -74,9 +67,8 @@ ACConnection >> executeRequest [
 { #category : #operations }
 ACConnection >> get: aUrl [
 
-	self authenticateUsing: tenant apiKey.
+	self setUrl: aUrl.
 	connection
-		url: self basePath + aUrl;
 		forJsonREST;
 		method: #GET.
 	^ self executeRequest
@@ -85,9 +77,8 @@ ACConnection >> get: aUrl [
 { #category : #operations }
 ACConnection >> get: aUrl withQuery: aDictionary [
 
-	self authenticateUsing: tenant apiKey.
+	self setUrl: aUrl.
 	connection
-		url: self basePath + aUrl;
 		queryAddAll: aDictionary asDictionary;
 		forJsonREST;
 		method: #GET.
@@ -97,6 +88,7 @@ ACConnection >> get: aUrl withQuery: aDictionary [
 { #category : #initialization }
 ACConnection >> initialize [
 
+	showProgress := false.
 	connection := ZnClient new
 		              systemPolicy;
 		              logLevel: 3;
@@ -106,12 +98,11 @@ ACConnection >> initialize [
 		              yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 ACConnection >> performForUrl: aUrl withPayload: aPayload [
 
-self authenticateUsing: tenant apiKey.
+	self setUrl: aUrl.
 	connection
-		url: self basePath + aUrl;
 		contents: aPayload;
 		forJsonREST.
 	^ self executeRequest
@@ -143,6 +134,13 @@ ACConnection >> recoverFromApiLimit [
 			amount: each
 			total: self apiLimitDelay.
 		(Delay forSeconds: 1) wait ]
+]
+
+{ #category : #initialization }
+ACConnection >> setUrl: aUrl [
+
+connection
+		url: self basePath + aUrl
 ]
 
 { #category : #initialization }
