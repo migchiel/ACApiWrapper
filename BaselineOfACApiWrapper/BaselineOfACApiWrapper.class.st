@@ -18,7 +18,7 @@ BaselineOfACApiWrapper >> baseline: spec [
 			package: 'ACApiWrapper-Tests'
 			with: [ spec requires: #( 'ACApiWrapper' ) ];
 			group: 'Core' with: #( 'ACApiWrapper' );
-			group: 'Scripts' with: #( 'ACApiSWrapper-Scripts' );
+			group: 'Scripts' with: #( 'ACApiWrapper-Scripts' );
 			group: 'Tests' with: #( 'ACApiWrapper-Tests' ) ]
 ]
 
