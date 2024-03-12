@@ -3,9 +3,9 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'tenant',
-		'connection',
 		'request',
-		'showProgress'
+		'showProgress',
+		'httpClient'
 	],
 	#category : #'ACApiWrapper-Core'
 }
@@ -26,7 +26,7 @@ ACConnection >> apiLimitDelay [
 { #category : #initialization }
 ACConnection >> authenticateUsing: anApiKey [
 
-	connection setBearerAuthentication:
+	httpClient setBearerAuthentication:
 		anApiKey 
 ]
 
@@ -39,7 +39,7 @@ ACConnection >> basePath [
 { #category : #operations }
 ACConnection >> delete: aUrl [
 
-	self setUrl: aUrl. connection method: #DELETE.
+	self setUrl: aUrl. httpClient method: #DELETE.
 	^ self executeRequest
 ]
 
@@ -50,7 +50,7 @@ ACConnection >> executeRequest [
 	UIManager default informUserDuring: [ :bar |
 		bar label: 'Performing API call...'.
 		[
-		^ connection
+		^ httpClient
 			  ifFail: [ :exception |
 				  ((exception isKindOf: ZnHttpUnsuccessful) and: [
 						   #( 429 ) includes: exception response code ]) ifTrue: [
@@ -68,7 +68,7 @@ ACConnection >> executeRequest [
 ACConnection >> get: aUrl [
 
 	self setUrl: aUrl.
-	connection
+	httpClient
 		forJsonREST;
 		method: #GET.
 	^ self executeRequest
@@ -78,18 +78,24 @@ ACConnection >> get: aUrl [
 ACConnection >> get: aUrl withQuery: aDictionary [
 
 	self setUrl: aUrl.
-	connection
+	httpClient
 		queryAddAll: aDictionary asDictionary;
 		forJsonREST;
 		method: #GET.
 	^ self executeRequest
 ]
 
+{ #category : #accessing }
+ACConnection >> httpClient [ 
+
+	^ httpClient
+]
+
 { #category : #initialization }
 ACConnection >> initialize [
 
 	showProgress := false.
-	connection := ZnClient new
+	httpClient := ZnClient new
 		              systemPolicy;
 		              logLevel: 3;
 		              signalProgress: false;
@@ -102,7 +108,7 @@ ACConnection >> initialize [
 ACConnection >> performForUrl: aUrl withPayload: aPayload [
 
 	self setUrl: aUrl.
-	connection
+	httpClient
 		contents: aPayload;
 		forJsonREST.
 	^ self executeRequest
@@ -111,7 +117,7 @@ ACConnection >> performForUrl: aUrl withPayload: aPayload [
 { #category : #operations }
 ACConnection >> post: aUrl withPayload: aPayload [
 
-	connection method: #POST.
+	httpClient method: #POST.
 	^ self performForUrl: aUrl withPayload: aPayload
 	
 ]
@@ -119,7 +125,7 @@ ACConnection >> post: aUrl withPayload: aPayload [
 { #category : #operations }
 ACConnection >> put: aUrl withPayload: aPayload [
 
-	connection method: #PUT.
+	httpClient method: #PUT.
 	^ self performForUrl: aUrl withPayload: aPayload 
 ]
 
@@ -140,20 +146,20 @@ ACConnection >> recoverFromApiLimit [
 ACConnection >> setGeneralRequestOptions [
 
 	self authenticateUsing: tenant apiKey.
-	connection setAcceptEncodingGzip.
+	httpClient setAcceptEncodingGzip.
 ]
 
 { #category : #initialization }
 ACConnection >> setUrl: aUrl [
 
-connection
+httpClient
 		url: self basePath + aUrl
 ]
 
 { #category : #initialization }
 ACConnection >> setupConnection [
 
-	connection := ZnClient new
+	httpClient := ZnClient new
 		              systemPolicy;
 		              logLevel: 3;
 		              numberOfRetries: 3;
@@ -172,5 +178,5 @@ ACConnection >> tenant: aTenant [
 { #category : #accessing }
 ACConnection >> url: aUrl [
 
-	connection url: aUrl
+	httpClient url: aUrl
 ]

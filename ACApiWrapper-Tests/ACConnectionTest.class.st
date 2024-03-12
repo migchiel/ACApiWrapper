@@ -10,9 +10,11 @@ Class {
 { #category : #test }
 ACConnectionTest >> testSetUrl [
 
-	| connection |
-	
+	| connection path |
 	connection := ACConnection for: ACTenant new.
-	connection setUrl: 'some/goofy/path'.
-	self assert: connection request url equals: 'bla'
+	path := '/some/goofy/path'.
+	connection setUrl: path.
+	self
+		assert: connection httpClient request url
+		equals: ACTenant defaultTenant asZnUrl / path
 ]
