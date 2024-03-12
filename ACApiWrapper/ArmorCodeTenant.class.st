@@ -110,55 +110,65 @@ ArmorCodeTenant >> ensureCollection: anItemOrItemCollection [
 { #category : #'API - Audit & Alerts' }
 ArmorCodeTenant >> getAlerts [
 
+	<script: 'self new getAlerts content inspect'>
 	^ connection get: '/api/alerts'
 ]
 
 { #category : #'API - Audit & Alerts' }
 ArmorCodeTenant >> getAlertsFilters [
 
+	<script: 'self new getAlertsFilters inspect'>
 	^ connection get: '/api/alerts/alert-filters'
 ]
 
 { #category : #'API - Audit & Alerts' }
 ArmorCodeTenant >> getAlertsNotificationStatistics [
 
+<script: 'self new getAlertsNotificationStatistics inspect'>
 	^ connection get: '/api/alerts/alert-notification-stats'
 ]
 
 { #category : #'API - Audit & Alerts' }
 ArmorCodeTenant >> getAlertsStatistics [
 
+	<script: 'self new getAlertsStatistics inspect'>
 	^ connection get: '/api/alerts/alert-stats'
 ]
 
 { #category : #'API - Audit & Alerts' }
 ArmorCodeTenant >> getAuditLogs [
 
-	^ connection get:
-		  '/user/audit/log/details/page' withQuery: {#page -> 0 . #size -> 100}
+	<script: 'self new getAuditLogs content inspect'>
+	^ connection get: '/user/audit/log/details/page' withQuery: { 
+			  (#page -> 0).
+			  (#size -> 100) }
 ]
 
 { #category : #'API - Audit & Alerts' }
 ArmorCodeTenant >> getAuditLogsFilter [
 
-	^ connection get: '/user/audit/log/filters' 
+	<script: 'self new getAuditLogsFilter inspect'>
+	^ connection get: '/user/audit/log/filters'
 ]
 
 { #category : #'API - Business Unit' }
 ArmorCodeTenant >> getBusinessUnits [
 
+	<script: 'self new getBusinessUnits inspect'>
 	^ connection get: '/user/business-units/'
 ]
 
 { #category : #'API - Misc' }
 ArmorCodeTenant >> getFeatureFlags [
 
+<script: 'self new getFeatureFlags inspect'>
 	^ connection get: '/user/feature-flag'
 ]
 
 { #category : #'API - Findings' }
 ArmorCodeTenant >> getFindings [
 
+	<script: 'self new getFindings inspect'>
 	^ connection
 		  post: '/user/findings/'
 		  withPayload: (NeoJSONObject fromString:
@@ -168,6 +178,7 @@ ArmorCodeTenant >> getFindings [
 { #category : #'API - Audit & Alerts' }
 ArmorCodeTenant >> getLogins [
 
+	<script: 'self new getLogins content inspect'>
 	^ connection get: '/user/audit/log/details/page' withQuery: { 
 			  (#revisionType -> 'LOGGED_IN').
 			  (#page -> 0).
@@ -177,18 +188,21 @@ ArmorCodeTenant >> getLogins [
 { #category : #'API - Product' }
 ArmorCodeTenant >> getProductTypes [
 
+	<script: 'self new getProductTypes inspect'>
 	^ connection get: '/user/product-type'
 ]
 
 { #category : #'API - Product' }
 ArmorCodeTenant >> getProducts [
 
+	<script: 'self new getProducts inspect'>
 	^ connection get: '/user/product'
 ]
 
 { #category : #'API - Product' }
 ArmorCodeTenant >> getProductsAll [
 
+	<script: 'self new getProductsAll inspect'>
 	^ connection get: '/user/product/all' withQuery: { 
 			  (#page -> 0).
 			  (#size -> 2000).
@@ -198,6 +212,7 @@ ArmorCodeTenant >> getProductsAll [
 { #category : #'API - Product' }
 ArmorCodeTenant >> getProductsElastic [
 
+	<script: 'self new getProductsElastic inspect'>
 	^ connection get: '/user/product/elastic/paged' withQuery: { 
 			  (#environmentName -> #STAGING).
 			  (#pageSize -> 100).
@@ -210,24 +225,28 @@ ArmorCodeTenant >> getProductsElastic [
 { #category : #'API - Misc' }
 ArmorCodeTenant >> getSessionDetails [
 
-	^ connection get: '/user/details/session' 
+<script: 'self new getSessionDetails inspect'>
+	^ connection get: '/user/details/session'
 ]
 
 { #category : #'API - Sub Product' }
 ArmorCodeTenant >> getSubProductTypes [
 
+	<script: 'self new getSubProductTypes inspect'>
 	^ connection get: '/user/sub-product-type'
 ]
 
 { #category : #'API - Sub Product' }
 ArmorCodeTenant >> getSubProducts [
 
+	<script: 'self new getSubProducts inspect'>
 	^ connection get: '/user/sub-product'
 ]
 
 { #category : #'API - Sub Product' }
 ArmorCodeTenant >> getSubProductsElastic [
 
+	<script: 'self new getSubProductsElastic inspect'>
 	^ connection get: '/user/sub-product/elastic' withQuery: { 
 			  (#environmentName -> #STAGING).
 			  (#pageSize -> 20).
@@ -240,12 +259,14 @@ ArmorCodeTenant >> getSubProductsElastic [
 { #category : #'API - Users & Teams' }
 ArmorCodeTenant >> getTeams [
 
+	<script: 'self new getTeams inspect'>
 	^ connection get: '/api/team/all-teams'
 ]
 
 { #category : #'API - Users & Teams' }
 ArmorCodeTenant >> getUsers [
 
+	<script: 'self new getUsers inspect'>
 	^ connection get: '/user/data/users'
 ]
 

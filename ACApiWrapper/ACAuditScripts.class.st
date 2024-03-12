@@ -19,12 +19,13 @@ ACAuditScripts >> getAlerts [
 { #category : #scripting }
 ACAuditScripts >> getLogins [
 
-	<script: 'self new getLogins'>
+	<script: 'self new getLogins inspect'>
 	| logins |
 	logins := tenant getLogins content collect: [ :entry | 
 		          String streamContents: [ :s | 
 			          s << entry message << ' at '
 			          << (self convertToTimeString: entry createdAt)
 			          << ' from ' << entry clientIp ] ].
-	ACApiItemView openWith: logins
+	ACApiItemView openWith: logins.
+	^ logins
 ]
