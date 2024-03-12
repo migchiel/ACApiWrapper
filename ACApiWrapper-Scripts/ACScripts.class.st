@@ -19,6 +19,6 @@ ACScripts >> convertToTimeString: aUnixTimeMilliSeconds [
 { #category : #initialization }
 ACScripts >> initialize [
 
-	tenant := ArmorCodeTenant new.
+	tenant := ACTenant new.
 	
 ]
