@@ -46,19 +46,19 @@ ACConnection >> delete: aUrl [
 { #category : #accessing }
 ACConnection >> executeRequest [
 
-	self authenticateUsing: tenant apiKey.
-	UIManager default informUserDuring: [ :bar | 
+	self setGeneralRequestOptions.
+	UIManager default informUserDuring: [ :bar |
 		bar label: 'Performing API call...'.
-		[ 
+		[
 		^ connection
-			  ifFail: [ :exception | 
-				  ((exception isKindOf: ZnHttpUnsuccessful) and: [ 
-						   #( 429 ) includes: exception response code ]) ifTrue: [ 
+			  ifFail: [ :exception |
+				  ((exception isKindOf: ZnHttpUnsuccessful) and: [
+						   #( 429 ) includes: exception response code ]) ifTrue: [
 						  self recoverFromApiLimit.
 						  exception signaler execute ] ];
 			  execute ]
 			on: HTTPProgress
-			do: [ :progress | 
+			do: [ :progress |
 				bar label: progress printString.
 				progress isEmpty ifFalse: [ bar current: progress percentage ].
 				progress resume ] ]
@@ -137,6 +137,13 @@ ACConnection >> recoverFromApiLimit [
 ]
 
 { #category : #initialization }
+ACConnection >> setGeneralRequestOptions [
+
+	self authenticateUsing: tenant apiKey.
+	connection setAcceptEncodingGzip.
+]
+
+{ #category : #initialization }
 ACConnection >> setUrl: aUrl [
 
 connection
@@ -147,12 +154,13 @@ connection
 ACConnection >> setupConnection [
 
 	connection := ZnClient new
-		        systemPolicy;
-		        logLevel: 3;
-		        signalProgress: false;
-		        autoResetEntityMethods: #( HEAD DELETE GET );
-		        logToTranscript;
-		        yourself
+		              systemPolicy;
+		              logLevel: 3;
+		              numberOfRetries: 3;
+		              retryDelay: 2;
+		              signalProgress: false;
+		              autoResetEntityMethods: #( HEAD DELETE GET );
+		              logToTranscript
 ]
 
 { #category : #accessing }
