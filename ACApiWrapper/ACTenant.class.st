@@ -179,10 +179,10 @@ ACTenant >> getFindings [
 ACTenant >> getLogins [
 
 	<script: 'self new getLogins content inspect'>
-	^ connection get: '/user/audit/log/details/page' withQuery: { 
+	^ connection get: '/user/audit/log/details/page' withQuery: {
 			  (#revisionType -> 'LOGGED_IN').
 			  (#page -> 0).
-			  (#size -> 10) }
+			  (#size -> 2000) }
 ]
 
 { #category : #'API - Product' }
