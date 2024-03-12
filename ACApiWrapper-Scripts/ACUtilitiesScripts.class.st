@@ -1,5 +1,5 @@
 Class {
 	#name : #ACUtilitiesScripts,
 	#superclass : #ACScripts,
-	#category : #'ACApiWrapper-Scripts'
+	#category : #'ACApiWrapper-Scripts-Script'
 }

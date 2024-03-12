@@ -8,16 +8,18 @@ Class {
 BaselineOfACApiWrapper >> baseline: spec [
 
 	<baseline>
-	spec for: #common do: [
+	spec for: #common do: [ 
 		self setUpDependencies: spec.
 		spec
 			package: 'ACApiWrapper'
 			with: [ spec requires: #( 'NeoJSON' 'ZTimestamp' ) ];
+			package: 'ACApiWrapper-Scripts'
+			with: [ spec requires: #( 'ACApiWrapper' ) ];
 			package: 'ACApiWrapper-Tests'
 			with: [ spec requires: #( 'ACApiWrapper' ) ];
-			group: 'Core'
-			with: #( 'ACApiWrapper' );
-			group: 'Tests' with: #( 'ACApiWrapper-Tests' )  ]
+			group: 'Core' with: #( 'ACApiWrapper' );
+			group: 'Scripts' with: #( 'ACApiSWrapper-Scripts' );
+			group: 'Tests' with: #( 'ACApiWrapper-Tests' ) ]
 ]
 
 { #category : #initialization }

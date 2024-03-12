@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'tenant'
 	],
-	#category : #'ACApiWrapper-Scripts'
+	#category : #'ACApiWrapper-Scripts-Script'
 }
 
 { #category : #helper }

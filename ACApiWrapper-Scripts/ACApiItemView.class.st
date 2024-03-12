@@ -5,7 +5,7 @@ Class {
 		'table',
 		'items'
 	],
-	#category : #'ACApiWrapper-Scripts'
+	#category : #'ACApiWrapper-Scripts-Gui'
 }
 
 { #category : #'api - showing' }

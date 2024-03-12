@@ -1,7 +1,7 @@
 Class {
 	#name : #ACProductScripts,
 	#superclass : #ACScripts,
-	#category : #'ACApiWrapper-Scripts'
+	#category : #'ACApiWrapper-Scripts-Script'
 }
 
 { #category : #scripting }
