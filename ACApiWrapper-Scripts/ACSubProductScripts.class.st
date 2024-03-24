@@ -16,5 +16,5 @@ ACSubProductScripts >> getSubProductTypes [
 ACSubProductScripts >> getSubProducts [
 
 	<script: 'self new getSubProducts'>
-	ACApiItemView openWith: (tenant getSubProducts content collect: #name)
+	ACApiItemView openWith: (tenant getSubProducts collect: #name)
 ]

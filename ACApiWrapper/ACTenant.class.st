@@ -240,7 +240,7 @@ ACTenant >> getSubProductTypes [
 ACTenant >> getSubProducts [
 
 	<script: 'self new getSubProducts inspect'>
-	^ connection get: '/user/sub-product'
+	^ connection get: '/api/sub-product'
 ]
 
 { #category : #'API - Sub Product' }
